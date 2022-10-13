@@ -1,20 +1,30 @@
-from flask import request, Flask, jsonify, make_response
+from flask import Blueprint
+from flask import request, Flask, current_app
+
 from db_context import DBConn
+from utils import make_empty_resp, log_debug
 
-app = Flask(__name__)
-dsn = "postgres://laggy:testpasswd123@127.0.0.1:5432/mnp"
-
-
-def make_empty_resp():
-    data = {'code': 'SUCCESS', 'message': 'Empty'}
-    return make_response(jsonify(data), 200)
+route_blueprint = Blueprint('route_blueprint', __name__)
 
 
-@app.route('/adduser', methods=['POST'])
+def create_app():
+    app = Flask(__name__)
+    app.config.update({
+        'DSN': "postgres://laggy:testpasswd123@127.0.0.1:5432/mnp"
+    })
+    app.register_blueprint(route_blueprint)
+
+    return app
+
+
+@route_blueprint.route('/adduser', methods=['POST'])
 def add_user():
-    with DBConn(dsn) as db_ctx:
+    with DBConn(current_app.config['DSN']) as db_ctx:
+        data = request.get_json()
         db_ctx.execute(
             "INSERT INTO users (type, email, name, phone, country, address) VALUES(%s, %s, %s, %s, %s, %s)",
-            (request.form['type'], request.form['email'], request.form['name'], request.form['phone'],
-             request.form['country'], request.form['address']))
-    return make_response()
+            (data['type'], data['email'], data['name'], data['phone'],
+             data['country'], data['address']))
+        log_debug(data)
+
+    return make_empty_resp()
