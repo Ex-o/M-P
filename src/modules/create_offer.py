@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import ContextTypes, MessageHandler, filters, ConversationHandler
-from ..db.utils import set_offer
+from ..db.utils import register_user
 
 MEETING_PLACE_PAGE = 4
 FOOD_PAGE = 5
@@ -38,10 +38,10 @@ async def food_place_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
 async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     loc_destination = context.user_data['loc_destination']
-    loc_source = context.user_data['loc_source']
-    cost = update.message.text
+    # loc_source = context.user_data['loc_source']
+    # cost = update.message.text
 
-    set_offer(loc_destination, loc_source, cost)
+    register_user(loc_destination)
 
     await update.message.reply_text(
         'Thank you for your offer, your offer is successfully added'
