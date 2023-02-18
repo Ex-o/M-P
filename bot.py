@@ -36,6 +36,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandl
 import os
 
 from src.utils.util import build_menu
+from src.modules.sender import SenderHandler
 
 # Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
 logging.basicConfig(
@@ -45,6 +46,13 @@ logger = logging.getLogger(__name__)
 
 TOKEN = os.environ['TG_TOKEN']
 PORT = int(os.environ.get('PORT', 5000))
+
+
+
+
+MAIN_PAGE = 1
+COURIER_PAGE = 2
+SENDER_PAGE = 3
 
 
 
@@ -62,7 +70,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
     await update.message.reply_text('Welcome', reply_markup=reply_markup)
-    return 1
+    return MAIN_PAGE
     # await update.message.reply_html(
     #     rf"Hi {user.mention_html()}!",
     #     reply_markup=ForceReply(selective=True),
@@ -92,7 +100,7 @@ async def one(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.edit_message_text(
         text="ARE YOU SUREEEE?????", reply_markup=reply_markup
     )
-    return 2
+    return COURIER_PAGE
 
 
 async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -118,12 +126,18 @@ def main() -> None:
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
         states={
-            1: [
+            MAIN_PAGE: [
                 CallbackQueryHandler(one, pattern="^" + str(1) + "$"),
-                CallbackQueryHandler(end, pattern="^" + str(2) + "$"),
+                CallbackQueryHandler(SenderHandler, pattern="^" + str(2) + "$"),
             ],
-            2: [
+            COURIER_PAGE: [
                 CallbackQueryHandler(end, pattern="^" + str(3) + "$")
+            ],
+            SENDER_PAGE: [
+                CallbackQueryHandler(end, pattern="^" + str(1) + "$"),
+                CallbackQueryHandler(end, pattern="^" + str(2) + "$"),
+                CallbackQueryHandler(end, pattern="^" + str(3) + "$"),
+                CallbackQueryHandler(end, pattern="^" + str(4) + "$"),
             ]
         },
         fallbacks=[CommandHandler("start", start)],
