@@ -34,9 +34,10 @@ from telegram import ForceReply, Update, InlineKeyboardButton, InlineKeyboardMar
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters, ConversationHandler, \
     CallbackQueryHandler
 import os
-from typing import Union, List
 
-# Enable logging
+from src.utils.util import build_menu
+
+# Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
@@ -45,19 +46,6 @@ logger = logging.getLogger(__name__)
 TOKEN = os.environ['TG_TOKEN']
 PORT = int(os.environ.get('PORT', 5000))
 
-
-def build_menu(
-    buttons: List[InlineKeyboardButton],
-    n_cols: int,
-    header_buttons: Union[InlineKeyboardButton, List[InlineKeyboardButton]]=None,
-    footer_buttons: Union[InlineKeyboardButton, List[InlineKeyboardButton]]=None
-) -> List[List[InlineKeyboardButton]]:
-    menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
-    if header_buttons:
-        menu.insert(0, header_buttons if isinstance(header_buttons, list) else [header_buttons])
-    if footer_buttons:
-        menu.append(footer_buttons if isinstance(footer_buttons, list) else [footer_buttons])
-    return menu
 
 
 # Define a few command handlers. These usually take the two arguments update and
