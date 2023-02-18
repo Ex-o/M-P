@@ -4,8 +4,8 @@ Sender main page
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, CallbackQueryHandler
-from end import end_handler
-from create_offer import create_offer_handler
+from .end import end_handler
+from .create_offer import create_offer_handler
 
 SENDER_PAGE = 3
 SENDER_STATE = {
