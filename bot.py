@@ -95,12 +95,12 @@ async def one(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.answer()
     keyboard = [
         [
-            InlineKeyboardButton("Sure", callback_data=str(3)),
+            InlineKeyboardButton("YES", callback_data=str(3)),
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
-        text="Second CallbackQueryHandler, Choose a route", reply_markup=reply_markup
+        text="ARE YOU SUREEEE?????", reply_markup=reply_markup
     )
     return 2
 
@@ -111,7 +111,7 @@ async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """
     query = update.callback_query
     await query.answer()
-    await query.edit_message_text(text="See you next time!")
+    await query.edit_message_text(text="OKKK!")
     return ConversationHandler.END
 
 
