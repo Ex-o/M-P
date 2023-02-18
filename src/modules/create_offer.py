@@ -7,7 +7,9 @@ PAYMENT_PAGE = 6
 
 
 async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.reply_text(
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(
         'Alright, please specify where you want to meet the courier in Innopolis'
     )
     return MEETING_PLACE_PAGE
