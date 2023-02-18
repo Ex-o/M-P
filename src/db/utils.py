@@ -8,7 +8,7 @@ def register_user(telegram_id):
 
 
 def set_offer(loc_destination, loc_source, cost):
-    with db as db_ctx:
+    with db() as db_ctx:
         db_ctx.execute(
             "INSERT INTO offers (loc_destination, loc_source, cost) "
             f"VALUES({loc_destination}, {loc_source}, {cost})")
