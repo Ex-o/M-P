@@ -1,4 +1,4 @@
-from db_context import .DBConn as db
+from .db_context import DBConn as db
 
 
 def register_user(telegram_id):
