@@ -1,9 +1,12 @@
 import psycopg2 as db
+import os
+
+DSN = os.environ['DATABASE_DSN']
 
 
 class DBConn:
-    def __init__(self, dsn):
-        self.connection = db.connect(dsn)
+    def __init__(self):
+        self.connection = db.connect(DSN)
 
     def __enter__(self):
         return self.connection.cursor()
