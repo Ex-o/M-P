@@ -14,8 +14,6 @@ bot.
 """
 
 import logging
-from db_utils import register_user
-from db_context import DBConn
 
 from telegram import __version__ as TG_VER
 
