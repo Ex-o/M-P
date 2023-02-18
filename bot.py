@@ -36,7 +36,9 @@ from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandl
 import os
 
 from src.utils.util import build_menu
-from src.modules.sender import SenderHandler
+from src.modules.sender import sender_handler, SENDER_STATE
+from src.modules.end import end_handler
+from src.modules.create_offer import CREATE_OFFER_STATE
 
 # Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
 logging.basicConfig(
@@ -103,16 +105,6 @@ async def one(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return COURIER_PAGE
 
 
-async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Returns `ConversationHandler.END`, which tells the
-    ConversationHandler that the conversation is over.
-    """
-    query = update.callback_query
-    await query.answer()
-    await query.edit_message_text(text="OKKK!")
-    return ConversationHandler.END
-
-
 def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
@@ -128,18 +120,14 @@ def main() -> None:
         states={
             MAIN_PAGE: [
                 CallbackQueryHandler(one, pattern="^" + str(1) + "$"),
-                CallbackQueryHandler(SenderHandler, pattern="^" + str(2) + "$"),
+                CallbackQueryHandler(sender_handler, pattern="^" + str(2) + "$"),
             ],
             COURIER_PAGE: [
-                CallbackQueryHandler(end, pattern="^" + str(3) + "$")
+                CallbackQueryHandler(end_handler, pattern="^" + str(3) + "$")
             ],
-            SENDER_PAGE: [
-                CallbackQueryHandler(end, pattern="^" + str(1) + "$"),
-                CallbackQueryHandler(end, pattern="^" + str(2) + "$"),
-                CallbackQueryHandler(end, pattern="^" + str(3) + "$"),
-                CallbackQueryHandler(end, pattern="^" + str(4) + "$"),
-            ]
-        },
+        } |
+        SENDER_STATE |
+        CREATE_OFFER_STATE,
         fallbacks=[CommandHandler("start", start)],
     )
 

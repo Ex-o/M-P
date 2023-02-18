@@ -3,12 +3,22 @@ Sender main page
 """
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ContextTypes
+from telegram.ext import ContextTypes, CallbackQueryHandler
+from end import end_handler
+from create_offer import create_offer_handler
 
 SENDER_PAGE = 3
+SENDER_STATE = {
+    SENDER_PAGE: [
+        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
+        CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
+        CallbackQueryHandler(create_offer_handler, pattern="^" + str(3) + "$"),
+        CallbackQueryHandler(end_handler, pattern="^" + str(4) + "$"),
+    ]
+}
 
 
-async def SenderHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def sender_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
     await query.answer()
     keyboard = [
