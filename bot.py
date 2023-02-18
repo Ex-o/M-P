@@ -70,7 +70,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     ]
 
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
-    await context.bot.send_message(..., "Welcome!", reply_markup=reply_markup)
+    await update.message.reply_text('Welcome', reply_markup=reply_markup)
     await update.message.reply_html(
         rf"Hi {user.mention_html()}!",
         reply_markup=ForceReply(selective=True),
