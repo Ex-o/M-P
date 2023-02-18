@@ -65,6 +65,8 @@ def build_menu(
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
+    logger.info("I AM A LOG")
+    logger.debug("I AM A DEBUG")
     button_list = [
         InlineKeyboardButton("Courier", callback_data=str(1)),
         InlineKeyboardButton("Sender", callback_data=str(2)),
