@@ -30,8 +30,9 @@ if __version_info__ < (20, 0, 0, "alpha", 1):
         f"{TG_VER} version of this example, "
         f"visit https://docs.python-telegram-bot.org/en/v{TG_VER}/examples.html"
     )
-from telegram import ForceReply, Update, InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup
-from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram import ForceReply, Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters, ConversationHandler, \
+    CallbackQueryHandler
 import os
 from typing import Union, List
 
@@ -46,11 +47,11 @@ PORT = int(os.environ.get('PORT', 5000))
 
 
 def build_menu(
-    buttons: List[KeyboardButton],
+    buttons: List[InlineKeyboardButton],
     n_cols: int,
-    header_buttons: Union[KeyboardButton, List[KeyboardButton]]=None,
-    footer_buttons: Union[KeyboardButton, List[KeyboardButton]]=None
-) -> List[List[KeyboardButton]]:
+    header_buttons: Union[InlineKeyboardButton, List[InlineKeyboardButton]]=None,
+    footer_buttons: Union[InlineKeyboardButton, List[InlineKeyboardButton]]=None
+) -> List[List[InlineKeyboardButton]]:
     menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
     if header_buttons:
         menu.insert(0, header_buttons if isinstance(header_buttons, list) else [header_buttons])
@@ -65,11 +66,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
     button_list = [
-        KeyboardButton("Courier"),
-        KeyboardButton("Sender"),
+        InlineKeyboardButton("Courier", callback_data='1'),
+        InlineKeyboardButton("Sender", callback_data='2'),
     ]
 
-    reply_markup = ReplyKeyboardMarkup(build_menu(button_list, n_cols=2))
+    reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
     await update.message.reply_text('Welcome', reply_markup=reply_markup)
     # await update.message.reply_html(
     #     rf"Hi {user.mention_html()}!",
@@ -87,6 +88,32 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text('Farhod Sucks DUCK!')
 
 
+async def one(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Show new choice of buttons"""
+    query = update.callback_query
+    await query.answer()
+    keyboard = [
+        [
+            InlineKeyboardButton("Sure", callback_data=str(3)),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await query.edit_message_text(
+        text="Second CallbackQueryHandler, Choose a route", reply_markup=reply_markup
+    )
+    return 1
+
+
+async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Returns `ConversationHandler.END`, which tells the
+    ConversationHandler that the conversation is over.
+    """
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text="See you next time!")
+    return ConversationHandler.END
+
+
 def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
@@ -98,7 +125,17 @@ def main() -> None:
 
     # on non command i.e message - echo the message on Telegram
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
-
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler("start", start)],
+        states={
+            1: [
+                CallbackQueryHandler(one, pattern="^" + "Courier" + "$")
+            ],
+            2: [
+                CallbackQueryHandler(end, pattern="^" + "Sure" + "$")
+            ]
+        }
+    )
     application.run_webhook(listen="0.0.0.0",
                             port=int(PORT),
                             url_path=TOKEN,
