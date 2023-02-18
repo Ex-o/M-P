@@ -128,7 +128,7 @@ def main() -> None:
         entry_points=[CommandHandler("start", start)],
         states={
             1: [
-                CallbackQueryHandler(one, pattern="^" + str(1) + "$")
+                CallbackQueryHandler(one, pattern="^" + str(1) + "$"),
                 CallbackQueryHandler(end, pattern="^" + str(2) + "$"),
             ],
             2: [
