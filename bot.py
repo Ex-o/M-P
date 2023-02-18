@@ -101,7 +101,7 @@ async def one(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.edit_message_text(
         text="Second CallbackQueryHandler, Choose a route", reply_markup=reply_markup
     )
-    return 1
+    return 2
 
 
 async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
