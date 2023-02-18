@@ -30,9 +30,10 @@ if __version_info__ < (20, 0, 0, "alpha", 1):
         f"{TG_VER} version of this example, "
         f"visit https://docs.python-telegram-bot.org/en/v{TG_VER}/examples.html"
     )
-from telegram import ForceReply, Update
+from telegram import ForceReply, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 import os
+from typing import Union, List
 
 # Enable logging
 logging.basicConfig(
@@ -43,12 +44,33 @@ logger = logging.getLogger(__name__)
 TOKEN = os.environ['TG_TOKEN']
 PORT = int(os.environ.get('PORT', 5000))
 
+
+def build_menu(
+    buttons: List[InlineKeyboardButton],
+    n_cols: int,
+    header_buttons: Union[InlineKeyboardButton, List[InlineKeyboardButton]]=None,
+    footer_buttons: Union[InlineKeyboardButton, List[InlineKeyboardButton]]=None
+) -> List[List[InlineKeyboardButton]]:
+    menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
+    if header_buttons:
+        menu.insert(0, header_buttons if isinstance(header_buttons, list) else [header_buttons])
+    if footer_buttons:
+        menu.append(footer_buttons if isinstance(footer_buttons, list) else [footer_buttons])
+    return menu
+
+
 # Define a few command handlers. These usually take the two arguments update and
 # context.
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
-    register_user(user.id)
+    button_list = [
+        InlineKeyboardButton("Courier", callback_data='1'),
+        InlineKeyboardButton("Sender", callback_data='2'),
+    ]
+
+    reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
+    await context.bot.send_message(..., "Welcome!", reply_markup=reply_markup)
     await update.message.reply_html(
         rf"Hi {user.mention_html()}!",
         reply_markup=ForceReply(selective=True),
