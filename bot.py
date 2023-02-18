@@ -65,7 +65,7 @@ def build_menu(
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
-    logger.info("I AM A LOG")
+    logger.info("/Start command was issued")
     logger.debug("I AM A DEBUG")
     button_list = [
         InlineKeyboardButton("Courier", callback_data=str(1)),
@@ -83,12 +83,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
-    await update.message.reply_text("Farhod Sucks DICK!")
+    await update.message.reply_text("Khaled got ice cream, YAY!")
 
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
-    await update.message.reply_text('Farhod Sucks DUCK!')
+    await update.message.reply_text('Farhod got ice cream, YAY!')
 
 
 async def one(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
