@@ -128,10 +128,10 @@ def main() -> None:
         entry_points=[CommandHandler("start", start)],
         states={
             1: [
-                CallbackQueryHandler(one, pattern="^" + "Courier" + "$")
+                CallbackQueryHandler(one, pattern="^" + "1" + "$")
             ],
             2: [
-                CallbackQueryHandler(end, pattern="^" + "Sure" + "$")
+                CallbackQueryHandler(end, pattern="^" + "3" + "$")
             ]
         },
         fallbacks=[CommandHandler("start", start)],
