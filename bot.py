@@ -66,8 +66,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
     button_list = [
-        InlineKeyboardButton("Courier", callback_data='1'),
-        InlineKeyboardButton("Sender", callback_data='2'),
+        InlineKeyboardButton("Courier", callback_data=str(1)),
+        InlineKeyboardButton("Sender", callback_data=str(2)),
     ]
 
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
@@ -128,10 +128,11 @@ def main() -> None:
         entry_points=[CommandHandler("start", start)],
         states={
             1: [
-                CallbackQueryHandler(one, pattern="^" + "1" + "$")
+                CallbackQueryHandler(one, pattern="^" + str(1) + "$")
+                CallbackQueryHandler(end, pattern="^" + str(2) + "$"),
             ],
             2: [
-                CallbackQueryHandler(end, pattern="^" + "3" + "$")
+                CallbackQueryHandler(end, pattern="^" + str(3) + "$")
             ]
         },
         fallbacks=[CommandHandler("start", start)],
