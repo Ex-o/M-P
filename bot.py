@@ -120,7 +120,6 @@ def main() -> None:
     application = Application.builder().token(TOKEN).build()
 
     # on different commands - answer in Telegram
-    application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
 
     # on non command i.e message - echo the message on Telegram
@@ -134,8 +133,12 @@ def main() -> None:
             2: [
                 CallbackQueryHandler(end, pattern="^" + "Sure" + "$")
             ]
-        }
+        },
+        fallbacks=[CommandHandler("start", start)],
     )
+
+    application.add_handler(conv_handler)
+
     application.run_webhook(listen="0.0.0.0",
                             port=int(PORT),
                             url_path=TOKEN,
