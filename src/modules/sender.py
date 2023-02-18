@@ -14,10 +14,16 @@ async def SenderHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     keyboard = [
         [
             InlineKeyboardButton("My offers", callback_data=str(1)),
+        ],
+        [
             InlineKeyboardButton("Approves", callback_data=str(2)),
+        ],
+        [
             InlineKeyboardButton("Create offer", callback_data=str(3)),
+        ],
+        [
             InlineKeyboardButton("Cancel offer", callback_data=str(4)),
-        ]
+        ],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
