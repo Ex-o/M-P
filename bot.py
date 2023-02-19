@@ -38,6 +38,7 @@ from src.modules.create_offer import CREATE_OFFER_STATE
 from src.modules.start import start_handler, START_STATE
 from src.modules.courier import COURIER_STATE
 from src.modules.help import help_handler
+from src.modules.get_list_of_offers import GET_LIST_OF_OFFERS_STATE
 
 # Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
 logging.basicConfig(
@@ -62,7 +63,8 @@ def main() -> None:
         START_STATE |
         COURIER_STATE |
         SENDER_STATE |
-        CREATE_OFFER_STATE,
+        CREATE_OFFER_STATE |
+        GET_LIST_OF_OFFERS_STATE,
         fallbacks=[CommandHandler("start", start_handler)],
     )
     application.add_handler(conv_handler)

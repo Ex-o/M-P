@@ -20,8 +20,8 @@ def _to_str(filters):
     res = ""
     for filter in filters:
         res += 'Offer:\n' \
-               f'Details: {filter[1]}\n' \
-               f'Needs to be delivered to: {filter[0]}\n' \
+               f'Details: {filter[0]}\n' \
+               f'Needs to be delivered to: {filter[1]}\n' \
                f'Pays: {filter[2]}\n'
 
     return res
@@ -39,7 +39,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
 
     keyboard = [
         [
-            InlineKeyboardButton("Get list of offers", callback_data=str(1)),
+            InlineKeyboardButton("Done", callback_data=str(1)),
         ],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
