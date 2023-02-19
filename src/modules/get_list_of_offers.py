@@ -41,7 +41,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
     await query.answer()
 
     if len(offers) == 0:
-        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Ready to complete it", callback_data=str(1))]])
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Go back", callback_data=str(3))]])
         await query.edit_message_text(
             text='Oops, there is no offer for you now. Try again later.', reply_markup=reply_markup
         )
