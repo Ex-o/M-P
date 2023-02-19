@@ -27,7 +27,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
     user = update.effective_user
 
     filters = _get_filters()
-    offers = get_offers(get_user(user.id))
+    offers = get_offers(get_user(user.id)[2])
 
     if filters:
         offers = [offer for offer in offers if offer[0] in filters]
