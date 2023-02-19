@@ -40,8 +40,9 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     loc_destination = context.user_data['loc_destination']
     loc_source = context.user_data['loc_source']
     cost = update.message.text
+    user_id = update.effective_user.id
 
-    set_offer(loc_destination, loc_source, cost)
+    set_offer(loc_destination, loc_source, cost, user_id)
 
     await update.message.reply_text(
         'Thank you for your offer, your offer is successfully added'
