@@ -8,15 +8,6 @@ from .end import end_handler
 from .create_offer import create_offer_handler
 
 SENDER_PAGE = 3
-SENDER_STATE = {
-    SENDER_PAGE: [
-        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
-        CallbackQueryHandler(create_offer_handler, pattern="^" + str(3) + "$"),
-        CallbackQueryHandler(end_handler, pattern="^" + str(4) + "$"),
-    ]
-}
-
 
 async def sender_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
@@ -41,3 +32,13 @@ async def sender_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     )
 
     return SENDER_PAGE
+
+
+SENDER_STATE = {
+    SENDER_PAGE: [
+        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
+        CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
+        CallbackQueryHandler(create_offer_handler, pattern="^" + str(3) + "$"),
+        CallbackQueryHandler(end_handler, pattern="^" + str(4) + "$"),
+    ]
+}
