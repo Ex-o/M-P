@@ -34,7 +34,7 @@ def get_offers(user_id):
     with db() as db_ctx:
         db_ctx.execute(
             'SELECT offers.loc_destination, offers.loc_source, offers.cost, offers.id FROM offers JOIN matched_offers '
-            'ON offers.id = matched_offers.offer_id'
+            'ON offers.id = matched_offers.offer_id '
             f'WHERE matched_offers.user_id = \'{user_id}\';')
         return db_ctx.fetchall()
 
