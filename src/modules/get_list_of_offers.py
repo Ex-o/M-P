@@ -3,7 +3,6 @@ from telegram.ext import ContextTypes, CallbackQueryHandler
 
 from ..db.utils import get_offers, get_user, update_last_offer_of_user, set_offer_match
 from .end import end_handler
-from .courier import courier_handler
 
 GET_LIST_OF_OFFERS_PAGE = 10
 
@@ -92,7 +91,7 @@ GET_LIST_OF_OFFERS_STATE = {
     GET_LIST_OF_OFFERS_PAGE: [
         CallbackQueryHandler(ready_to_complete_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(get_list_of_offers_handler, pattern="^" + str(2) + "$"),
-        CallbackQueryHandler(courier_handler, pattern="^" + str(3) + "$"),
+        CallbackQueryHandler(end_handler, pattern="^" + str(3) + "$"),
         CallbackQueryHandler(get_list_of_offers_handler, pattern="^" + str(4) + "$"),
     ],
 }
