@@ -9,6 +9,13 @@ def register_user(telegram_id, full_name):
             f'ON CONFLICT (id) DO UPDATE SET full_name = EXCLUDED.full_name;')
 
 
+def get_user(user_id):
+    with db() as db_ctx:
+        db_ctx.execute(
+            f'SELECT id, full_name, last_offer FROM users WHERE id = {user_id};')
+        return db_ctx.fetchall()[0]
+
+
 def set_offer(loc_destination, loc_source, cost):
     with db() as db_ctx:
         db_ctx.execute(
@@ -16,8 +23,15 @@ def set_offer(loc_destination, loc_source, cost):
             f'VALUES (\'{loc_destination}\', \'{loc_source}\', \'{cost}\');')
 
 
-def get_offers():
+def get_offers(last_id):
     with db() as db_ctx:
         db_ctx.execute(
-            'SELECT loc_destination, loc_source, cost FROM offers;')
+            f'SELECT loc_destination, loc_source, cost, id FROM offers WHERE id > {last_id};')
         return db_ctx.fetchall()
+
+
+def update_last_offer_of_user(user_id, last_offer_id):
+    with db() as db_ctx:
+        db_ctx.execute(
+            f'UPDATE users SET last_offer = {last_offer_id} WHERE id = {user_id};'
+        )
