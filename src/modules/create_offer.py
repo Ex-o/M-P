@@ -16,7 +16,7 @@ async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYP
     return MEETING_PLACE_PAGE
 
 
-async def metting_place_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def meeting_place_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     text = update.message.text
     context.user_data['loc_source'] = text
 
@@ -53,7 +53,7 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 CREATE_OFFER_STATE = {
     MEETING_PLACE_PAGE: [
         MessageHandler(
-            filters.TEXT & ~filters.COMMAND, metting_place_handler
+            filters.TEXT & ~filters.COMMAND, meeting_place_handler
         )
     ],
     FOOD_PAGE: [

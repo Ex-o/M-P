@@ -13,7 +13,7 @@ from .courier import courier_handler
 START_PAGE = 1
 
 
-async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
 
     register_user(user.id, user.full_name)

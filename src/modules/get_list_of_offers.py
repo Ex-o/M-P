@@ -18,7 +18,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
     user = update.effective_user
 
     filters = _get_filters()
-    offers = get_offers_since(get_user(user.id)[2])
+    offers = get_offers_since(get_user(user.id)['last_offer'])
 
     if filters:
         offers = [offer for offer in offers if offer[0] in filters]
@@ -26,7 +26,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
     offer = offers[0] if len(offers) > 0 else None
 
     if offer:
-        update_last_offer_of_user(user.id, offer[3])
+        update_last_offer_of_user(user.id, offer['id'])
 
     query = update.callback_query
     await query.answer()

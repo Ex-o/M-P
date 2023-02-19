@@ -1,6 +1,9 @@
 from .db_context import DBConn as db
 
 
+# TODO: prevent sql injection
+
+
 def register_user(telegram_id, full_name):
     with db() as db_ctx:
         db_ctx.execute(
@@ -13,14 +16,14 @@ def get_user(user_id):
     with db() as db_ctx:
         db_ctx.execute(
             f'SELECT id, full_name, last_offer FROM users WHERE id = \'{user_id}\';')
-        return db_ctx.fetchall()[0]
+        return db_ctx.fetchone()
 
 
-def set_offer(loc_destination, loc_source, cost):
+def set_offer(loc_destination, loc_source, cost, user_id):
     with db() as db_ctx:
         db_ctx.execute(
-            'INSERT INTO offers (loc_destination, loc_source, cost) '
-            f'VALUES (\'{loc_destination}\', \'{loc_source}\', \'{cost}\');')
+            'INSERT INTO offers (loc_destination, loc_source, cost, user_id) '
+            f'VALUES (\'{loc_destination}\', \'{loc_source}\', \'{cost}\', \'{user_id}\');')
 
 
 def get_offers_since(last_id):
