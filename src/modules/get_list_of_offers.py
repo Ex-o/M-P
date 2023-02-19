@@ -44,7 +44,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
-        text=_to_str(filters), reply_markup=reply_markup
+        text=_to_str(offers), reply_markup=reply_markup
     )
 
     return GET_LIST_OF_OFFERS_PAGE
