@@ -47,7 +47,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
         )
         return GET_LIST_OF_OFFERS_PAGE
 
-    context['last_offer_id'] = offer[3]
+    context.user_data['last_offer_id'] = offer[3]
 
     keyboard = [
         [
@@ -68,7 +68,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
 async def ready_to_complete_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
     user_id = user.id
-    offer_id = context['last_offer_id']
+    offer_id = context.user_data['last_offer_id']
 
     set_offer_match(user_id, offer_id)
 
