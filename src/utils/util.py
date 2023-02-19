@@ -14,3 +14,14 @@ def build_menu(
     if footer_buttons:
         menu.append(footer_buttons if isinstance(footer_buttons, list) else [footer_buttons])
     return menu
+
+
+def to_offer(filters):
+    res = ""
+    for filter in filters:
+        res += 'Offer:\n' \
+               f'Details: {filter[0]}\n' \
+               f'Needs to be delivered to: {filter[1]}\n' \
+               f'Pays: {filter[2]}\n\n'
+
+    return res

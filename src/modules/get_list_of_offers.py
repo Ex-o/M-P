@@ -1,8 +1,9 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, CallbackQueryHandler
 
-from ..db.utils import get_offers, get_user, update_last_offer_of_user, set_offer_match
+from ..db.utils import get_offers_since, get_user, update_last_offer_of_user, set_offer_match
 from .end import end_handler
+from ..utils.util import to_offer
 
 GET_LIST_OF_OFFERS_PAGE = 10
 
@@ -12,22 +13,12 @@ def _get_filters():
     return None
 
 
-def _to_str(filters):
-    res = ""
-    for filter in filters:
-        res += 'Offer:\n' \
-               f'Details: {filter[0]}\n' \
-               f'Needs to be delivered to: {filter[1]}\n' \
-               f'Pays: {filter[2]}\n\n'
-
-    return res
-
 
 async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
 
     filters = _get_filters()
-    offers = get_offers(get_user(user.id)[2])
+    offers = get_offers_since(get_user(user.id)[2])
 
     if filters:
         offers = [offer for offer in offers if offer[0] in filters]
@@ -50,16 +41,14 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
     context.user_data['last_offer_id'] = offer[3]
 
     keyboard = [
-        [
-            InlineKeyboardButton("Ready to complete it", callback_data=str(1)),
-            InlineKeyboardButton("Skip offer", callback_data=str(2)),
-            InlineKeyboardButton("Go back", callback_data=str(3)),
-        ],
+        [InlineKeyboardButton("Ready to complete it", callback_data=str(1))],
+        [InlineKeyboardButton("Skip offer", callback_data=str(2))],
+        [InlineKeyboardButton("Go back", callback_data=str(3))],
     ]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
-        text=_to_str([offer]), reply_markup=reply_markup
+        text=to_offer([offer]), reply_markup=reply_markup
     )
 
     return GET_LIST_OF_OFFERS_PAGE
