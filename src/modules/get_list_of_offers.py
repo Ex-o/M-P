@@ -4,7 +4,7 @@ from telegram.ext import ContextTypes, CallbackQueryHandler
 from ..db.utils import get_offers
 from .end import end_handler
 
-GET_LIST_OF_OFFERS_PAGE = 2
+GET_LIST_OF_OFFERS_PAGE = 10
 
 
 def _get_filters():
@@ -22,7 +22,7 @@ def _to_str(filters):
         res += 'Offer:\n' \
                f'Details: {filter[0]}\n' \
                f'Needs to be delivered to: {filter[1]}\n' \
-               f'Pays: {filter[2]}\n'
+               f'Pays: {filter[2]}\n\n'
 
     return res
 
