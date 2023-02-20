@@ -26,10 +26,3 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     await update.message.reply_text('Welcome', reply_markup=reply_markup)
     return START_PAGE
 
-
-START_STATE = {
-    START_PAGE: [
-        CallbackQueryHandler(courier_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(sender_handler, pattern="^" + str(2) + "$"),
-    ]
-}

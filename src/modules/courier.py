@@ -21,12 +21,3 @@ async def courier_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     )
 
     return COURIER_PAGE
-
-
-COURIER_STATE = {
-    COURIER_PAGE: [
-        CallbackQueryHandler(get_list_of_offers_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
-        CallbackQueryHandler(active_offers_handler, pattern="^" + str(3) + "$"),
-    ],
-}

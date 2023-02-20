@@ -74,11 +74,3 @@ async def ready_to_complete_handler(update: Update, context: ContextTypes.DEFAUL
         text="Here are the details about the customer: TODO\nWhat next?", reply_markup=reply_markup
     )
 
-GET_LIST_OF_OFFERS_STATE = {
-    GET_LIST_OF_OFFERS_PAGE: [
-        CallbackQueryHandler(ready_to_complete_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(get_list_of_offers_handler, pattern="^" + str(2) + "$"),
-        CallbackQueryHandler(end_handler, pattern="^" + str(3) + "$"),
-        CallbackQueryHandler(get_list_of_offers_handler, pattern="^" + str(4) + "$"),
-    ],
-}

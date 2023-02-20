@@ -24,10 +24,3 @@ async def active_offers_handler(update: Update, context: ContextTypes.DEFAULT_TY
     )
 
     return ACTIVE_OFFERS_PAGE
-
-
-ACTIVE_OFFERS_STATE = {
-    ACTIVE_OFFERS_PAGE: [
-        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
-    ],
-}

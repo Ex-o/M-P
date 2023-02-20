@@ -15,6 +15,7 @@ bot.
 
 from telegram import __version__ as TG_VER
 
+
 try:
     from telegram import __version_info__
 except ImportError:
@@ -33,11 +34,8 @@ import logging
 
 from telegram.ext import Application, CommandHandler, ContextTypes, ConversationHandler
 
-from src.modules.start import start_handler, START_STATE
-from src.modules.courier import COURIER_STATE
+from src.modules.start import start_handler
 from src.modules.help import help_handler
-from src.modules.get_list_of_offers import GET_LIST_OF_OFFERS_STATE
-from src.modules.active_offers import ACTIVE_OFFERS_STATE
 from src.data.states import *
 
 # Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
