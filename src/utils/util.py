@@ -20,8 +20,8 @@ def to_offer(filters):
     res = ""
     for filter in filters:
         res += 'Offer:\n' \
-               f'Details: {filter[0]}\n' \
-               f'Needs to be delivered to: {filter[1]}\n' \
-               f'Pays: {filter[2]}\n\n'
+               f"Details: {filter['user_id']}\n" \
+               f"Needs to be delivered to: {filter['loc_destination']}\n" \
+               f"Pays: {filter['cost']}\n\n"
 
     return res
