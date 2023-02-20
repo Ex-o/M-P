@@ -37,8 +37,8 @@ def get_active_sender_offers(user_id):
     with db() as db_ctx:
         db_ctx.execute(
             'SELECT offers.loc_destination, offers.loc_source, offers.id '
-            'FROM offers JOIN matched_offers on offers.id = matched_offers.offer_id '
-            'WHERE matched_offers.status = \'new\' '
+            'FROM offers LEFT JOIN matched_offers on offers.id = matched_offers.offer_id '
+            'WHERE matched_offers.status = \'new\' OR matched_offers.status IS NULL '
             f'AND offers.user_id = \'{user_id}\';'
         )
         return db_ctx.fetchall()
