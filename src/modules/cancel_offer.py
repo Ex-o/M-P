@@ -9,7 +9,7 @@ async def destroy_offer_handler(update: Update, context: ContextTypes.DEFAULT_TY
     query = update.callback_query
     await query.answer()
     await query.edit_message_text(
-        'Your offer is now deleted!'
+        f"Your offer [{context.user_data['offer_to_be_cancelled']} is now deleted!"
     )
 
     return ConversationHandler.END
