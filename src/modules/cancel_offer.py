@@ -46,8 +46,9 @@ async def cancel_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYP
         )
         return None
 
-    keyboard = [InlineKeyboardButton(f"{x['loc_destination']} -> {x['loc_source']}", callback_data=str(x['id']))
+    keyboard = [[InlineKeyboardButton(f"{x['loc_destination']} -> {x['loc_source']}", callback_data=str(x['id']))]
                 for x in active_offers]
+
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
