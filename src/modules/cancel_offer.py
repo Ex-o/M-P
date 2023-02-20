@@ -4,7 +4,9 @@ from pages import *
 
 from src.db.utils import get_active_sender_offers
 
-CANCEL_OFFER_STATE = []
+CANCEL_OFFER_STATE = {
+    CANCEL_OFFER_PAGE: []
+}
 
 
 async def cancel_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
