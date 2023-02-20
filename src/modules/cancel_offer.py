@@ -17,7 +17,7 @@ async def cancel_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYP
             'You don\'t have any active offers!'
         )
 
-    return SENDER_PAGE
+    return None
 
     await query.edit_message_text(
         'Alright, please specify where you want to meet the courier in Innopolis'
