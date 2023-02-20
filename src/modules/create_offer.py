@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes, MessageHandler, filters, ConversationHandler
 from ..db.utils import set_offer
 
-from src.data.pages import MEETING_PLACE_PAGE, FOOD_PAGE, PAYMENT_PAGE
+from src.data.pages import *
 
 
 async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
