@@ -3,7 +3,6 @@ from telegram.ext import ContextTypes
 from src.data.pages import *
 
 from src.db.utils import get_active_sender_offers
-from .sender import SENDER_STATE
 
 CANCEL_OFFER_STATE = {
     CANCEL_OFFER_PAGE: []
