@@ -67,8 +67,7 @@ def main() -> None:
         SENDER_STATE |
         CREATE_OFFER_STATE |
         GET_LIST_OF_OFFERS_STATE |
-        ACTIVE_OFFERS_STATE |
-        CANCEL_OFFER_STATE,
+        ACTIVE_OFFERS_STATE,
         fallbacks=[CommandHandler("start", start_handler)],
     )
     application.add_handler(conv_handler)
