@@ -1,6 +1,7 @@
 from telegram import Update
 from telegram.ext import ContextTypes, MessageHandler, filters, ConversationHandler
 from ..db.utils import set_offer
+
 from src.data.pages import *
 
 
@@ -47,21 +48,3 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
     return ConversationHandler.END
 
-
-CREATE_OFFER_STATE = {
-    MEETING_PLACE_PAGE: [
-        MessageHandler(
-            filters.TEXT & ~filters.COMMAND, meeting_place_handler
-        )
-    ],
-    FOOD_PAGE: [
-        MessageHandler(
-            filters.TEXT & ~filters.COMMAND, food_place_handler
-        )
-    ],
-    PAYMENT_PAGE: [
-        MessageHandler(
-            filters.TEXT & ~filters.COMMAND, payment_handler
-        )
-    ]
-}
