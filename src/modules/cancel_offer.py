@@ -21,8 +21,8 @@ async def cancel_confirm_handler(update: Update, context: ContextTypes.DEFAULT_T
 
     context.user_data['offer_to_be_cancelled'] = query.data
     keyboard = [
-        InlineKeyboardButton("Cancel", callback_data=str(1)),
-        InlineKeyboardButton("Abort", callback_data=str(2))
+        [InlineKeyboardButton("Cancel", callback_data=str(1))],
+        [InlineKeyboardButton("Abort", callback_data=str(2))]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
