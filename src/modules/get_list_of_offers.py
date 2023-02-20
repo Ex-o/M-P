@@ -36,7 +36,7 @@ async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAU
         )
         return GET_LIST_OF_OFFERS_PAGE
 
-    context.user_data['last_offer_id'] = offer[3]
+    context.user_data['last_offer_id'] = offer['id']
 
     keyboard = [
         [InlineKeyboardButton("Ready to complete it", callback_data=str(1))],
