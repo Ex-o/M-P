@@ -7,7 +7,7 @@ from telegram.ext import ContextTypes, CallbackQueryHandler
 from .end import end_handler
 from .create_offer import create_offer_handler
 from .cancel_offer import cancel_offer_handler
-from pages import *
+from src.data.pages import *
 
 async def sender_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query

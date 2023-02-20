@@ -4,7 +4,7 @@ from .end import end_handler
 from .get_list_of_offers import get_list_of_offers_handler
 from .active_offers import active_offers_handler
 
-from pages import *
+from src.data.pages import *
 
 async def courier_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Show new choice of buttons"""

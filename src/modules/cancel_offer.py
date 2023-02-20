@@ -1,6 +1,6 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ContextTypes, CallbackQueryHandler
-from pages import *
+from telegram import Update
+from telegram.ext import ContextTypes
+from src.data.pages import *
 
 from src.db.utils import get_active_sender_offers
 

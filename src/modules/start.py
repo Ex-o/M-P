@@ -4,7 +4,7 @@ Send a message when the command /start is issued.
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackQueryHandler, ContextTypes
-from pages import *
+from src.data.pages import *
 
 from ..utils.util import build_menu
 from ..db.utils import register_user

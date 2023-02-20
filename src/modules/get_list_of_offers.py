@@ -4,7 +4,7 @@ from telegram.ext import ContextTypes, CallbackQueryHandler
 from ..db.utils import get_offers_since, get_user, update_last_offer_of_user, set_offer_match
 from .end import end_handler
 from ..utils.util import to_offer
-from pages import *
+from src.data.pages import *
 
 
 def _get_filters():
