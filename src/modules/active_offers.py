@@ -4,7 +4,6 @@ from .end import end_handler
 from ..utils.util import to_offer
 from ..db.utils import get_offers
 
-ACTIVE_OFFERS_PAGE = 11
 
 
 async def active_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:

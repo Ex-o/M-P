@@ -6,8 +6,8 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, CallbackQueryHandler
 from .end import end_handler
 from .create_offer import create_offer_handler
-
-SENDER_PAGE = 3
+from .cancel_offer import cancel_offer_handler
+from pages import *
 
 async def sender_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
@@ -31,6 +31,6 @@ SENDER_STATE = {
         CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(create_offer_handler, pattern="^" + str(3) + "$"),
-        CallbackQueryHandler(end_handler, pattern="^" + str(4) + "$"),
+        CallbackQueryHandler(cancel_offer_handler, pattern="^" + str(4) + "$"),
     ]
 }

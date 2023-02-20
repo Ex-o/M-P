@@ -4,14 +4,12 @@ from telegram.ext import ContextTypes, CallbackQueryHandler
 from ..db.utils import get_offers_since, get_user, update_last_offer_of_user, set_offer_match
 from .end import end_handler
 from ..utils.util import to_offer
-
-GET_LIST_OF_OFFERS_PAGE = 10
+from pages import *
 
 
 def _get_filters():
     # TODO: implement logic, should return list of users places where he gonna visit
     return None
-
 
 
 async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
