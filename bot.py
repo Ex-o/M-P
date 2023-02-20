@@ -33,13 +33,12 @@ import logging
 
 from telegram.ext import Application, CommandHandler, ContextTypes, ConversationHandler
 
-from src.modules.sender import SENDER_STATE
-from src.modules.create_offer import CREATE_OFFER_STATE
 from src.modules.start import start_handler, START_STATE
 from src.modules.courier import COURIER_STATE
 from src.modules.help import help_handler
 from src.modules.get_list_of_offers import GET_LIST_OF_OFFERS_STATE
 from src.modules.active_offers import ACTIVE_OFFERS_STATE
+from src.data.pages import *
 
 # Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
 logging.basicConfig(
