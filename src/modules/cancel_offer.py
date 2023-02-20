@@ -3,6 +3,7 @@ from telegram.ext import ContextTypes
 from src.data.pages import *
 
 from src.db.utils import get_active_sender_offers
+from .sender import SENDER_STATE
 
 CANCEL_OFFER_STATE = {
     CANCEL_OFFER_PAGE: []
@@ -21,7 +22,7 @@ async def cancel_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYP
             'You don\'t have any active offers!'
         )
 
-    return START_PAGE
+    return SENDER_STATE
 
     await query.edit_message_text(
         'Alright, please specify where you want to meet the courier in Innopolis'
