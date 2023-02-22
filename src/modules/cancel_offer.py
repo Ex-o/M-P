@@ -1,8 +1,8 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
-from src.data.pages import *
+from ..data.pages import *
 
-from src.db.utils import get_active_sender_offers
+from ..db.utils import get_active_sender_offers
 
 
 async def destroy_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:

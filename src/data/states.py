@@ -1,14 +1,15 @@
 from telegram.ext import CallbackQueryHandler, MessageHandler, filters
 
-from src.modules.active_offers import active_offers_handler
-from src.modules.approve_offers import get_approvals_handler
-from src.modules.cancel_offer import cancel_offer_handler, cancel_confirm_handler, destroy_offer_handler
-from src.modules.courier import courier_handler
-from src.modules.create_offer import create_offer_handler, meeting_place_handler, food_place_handler, payment_handler
-from src.modules.end import end_handler
-from src.data.pages import *
-from src.modules.get_list_of_offers import get_list_of_offers_handler, ready_to_complete_handler
-from src.modules.sender import sender_handler
+from ..modules.active_offers import active_offers_handler
+from ..modules.cancel_offer import cancel_offer_handler, cancel_confirm_handler, destroy_offer_handler
+from ..modules.courier import courier_handler
+from ..modules.create_offer import create_offer_handler, meeting_place_handler, food_place_handler, payment_handler
+from ..modules.end import end_handler
+from ..data.pages import *
+from ..modules.get_list_of_offers import get_list_of_offers_handler, ready_to_complete_handler
+from ..modules.sender import sender_handler
+from ..modules.approve_offers import get_approvals_handler
+
 
 START_STATE = {
     START_PAGE: [
@@ -68,21 +69,21 @@ ACTIVE_OFFERS_STATE = {
 }
 
 CANCEL_OFFER_STATE = {
-    CANCEL_OFFER_PAGE : [
+    CANCEL_OFFER_PAGE: [
         CallbackQueryHandler(cancel_confirm_handler, pattern="^(0|[1-9][0-9]*)$")
     ],
-    CANCEL_CONFIRM_PAGE : [
+    CANCEL_CONFIRM_PAGE: [
         CallbackQueryHandler(destroy_offer_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
     ]
 }
 
 APPROVAL_CONFIRM_PAGE = {
-    GET_APPROVALS_PAGE : [
+    GET_APPROVALS_PAGE: [
 
     ],
 
-    GET_APPROVALS_PAGE : [
+    GET_APPROVALS_PAGE: [
 
     ]
 }
