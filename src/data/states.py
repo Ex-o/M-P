@@ -8,8 +8,7 @@ from ..modules.end import end_handler
 from ..data.pages import *
 from ..modules.get_list_of_offers import get_list_of_offers_handler, ready_to_complete_handler
 from ..modules.sender import sender_handler
-from ..modules.approve_offers import get_approvals_handler
-
+from ..modules.approve_offers import get_approvals_handler, confirm_approval_handler, approve_offer_handler
 
 START_STATE = {
     START_PAGE: [
@@ -80,10 +79,11 @@ CANCEL_OFFER_STATE = {
 
 APPROVAL_CONFIRM_PAGE = {
     GET_APPROVALS_PAGE: [
-
+        CallbackQueryHandler(confirm_approval_handler, pattern="^(0|[1-9][0-9]*)$")
     ],
 
     GET_APPROVALS_PAGE: [
-
+        CallbackQueryHandler(approve_offer_handler, pattern="^" + str(1) + "$"),
+        CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
     ]
 }
