@@ -50,7 +50,7 @@ def get_active_sender_offers(user_id):
         db_ctx.execute(
             'SELECT loc_destination, loc_source, id '
             'FROM offers '
-            'WHERE status IS NOT \'approved\' '
+            'WHERE status != \'approved\' '
             f'AND offers.user_id = \'{user_id}\';'
         )
         return db_ctx.fetchall()
