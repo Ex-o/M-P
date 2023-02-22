@@ -38,8 +38,8 @@ def get_needs_approval_list(user_id):
         db_ctx.execute(
             f'SELECT * '
             f'FROM matched_offers '
-            f'JOIN offers ON matched_offers.id = offers.id '
-            f'JOIN users ON matched_offers.user_id =users.id '
+            f'JOIN offers ON matched_offers.offer_id = offers.id '
+            f'JOIN users ON matched_offers.user_id = users.id '
             f'WHERE offers.user_id = \'{user_id}\' AND offers.status != \'approved\';'
         )
         return db_ctx.fetchall()
