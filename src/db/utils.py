@@ -33,12 +33,24 @@ def get_offers_since(last_id):
         return db_ctx.fetchall()
 
 
+def get_needs_approval_list(user_id):
+    with db() as db_ctx:
+        db_ctx.execute(
+            f'SELECT * '
+            f'FROM matched_offers '
+            f'JOIN offers ON matcheed_offers.id = offers.id '
+            f'JOIN users ON offers.user_id = matched_offers.user_id '
+            f'WHERE offers.user_id = \'{user_id}\' AND offers.status != \'approved\';'
+        )
+        return db_ctx.fetchall()
+
+
 def get_active_sender_offers(user_id):
     with db() as db_ctx:
         db_ctx.execute(
-            'SELECT offers.loc_destination, offers.loc_source, offers.id '
-            'FROM offers LEFT JOIN matched_offers on offers.id = matched_offers.offer_id '
-            'WHERE matched_offers.status = \'new\' OR matched_offers.status IS NULL '
+            'SELECT loc_destination, loc_source, id '
+            'FROM offers '
+            'WHERE status IS NOT \'approved\' '
             f'AND offers.user_id = \'{user_id}\';'
         )
         return db_ctx.fetchall()

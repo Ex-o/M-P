@@ -16,6 +16,11 @@ def build_menu(
     return menu
 
 
+def to_approval(row):
+    return f"{row['full_name']} is ready to fulfil your offer {row['id']} from " \
+          f"{row['loc_destination']} to {row['loc_source']} for {row['cost']} rubles!\n\n"
+
+
 def to_offer(filters):
     res = ""
     for filter in filters:
