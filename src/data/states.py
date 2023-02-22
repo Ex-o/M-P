@@ -81,8 +81,7 @@ APPROVAL_CONFIRM_PAGE = {
     GET_APPROVALS_PAGE: [
         CallbackQueryHandler(confirm_approval_handler, pattern="^(0|[1-9][0-9]*)$")
     ],
-
-    GET_APPROVALS_PAGE: [
+    APPROVAL_CONFIRM_PAGE: [
         CallbackQueryHandler(approve_offer_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
     ]

@@ -33,7 +33,7 @@ async def confirm_approval_handler(update: Update, context: ContextTypes.DEFAULT
         'Are you sure you want to approve this order?', reply_markup=reply_markup
     )
 
-    return CANCEL_CONFIRM_PAGE
+    return APPROVAL_CONFIRM_PAGE
 
 
 async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
