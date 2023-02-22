@@ -64,4 +64,4 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
 
     await query.edit_message_text(reply, reply_markup=reply_markup)
 
-    return GET_LIST_OF_OFFERS_PAGE
+    return GET_APPROVALS_PAGE
