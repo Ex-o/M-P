@@ -77,7 +77,7 @@ CANCEL_OFFER_STATE = {
     ]
 }
 
-APPROVAL_CONFIRM_PAGE = {
+OFFER_APPROVAL_STATE = {
     GET_APPROVALS_PAGE: [
         CallbackQueryHandler(confirm_approval_handler, pattern="^(0|[1-9][0-9]*)$")
     ],
