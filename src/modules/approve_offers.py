@@ -26,7 +26,7 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
         reply += f'{idx} {to_approval(offer)}'
         context.user_data['approval_map'][idx] = offer['offer_id']
 
-    keyboard = [[InlineKeyboardButton(f"{x['loc_destination']} -> {x['loc_source']}",
+    keyboard = [[InlineKeyboardButton(f"{x}",
                                       callback_data=str(context.user_data['approval_map'][x]))]
                 for x in range(1, len(approvals) + 1)]
 
