@@ -1,4 +1,4 @@
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
 
 from src.data.pages import *
@@ -20,9 +20,18 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
         return ConversationHandler.END
 
     reply = ""
+    context.user_data['approval_map'] = {}
+
     for idx, offer in enumerate(approvals, start=1):
         reply += f'{idx} {to_approval(offer)}'
+        context.user_data['approval_map'][idx] = offer['offer_id']
 
-    await query.edit_message_text(reply)
+    keyboard = [[InlineKeyboardButton(f"{x['loc_destination']} -> {x['loc_source']}",
+                                      callback_data=str(context.user_data['approval_map'][x]))]
+                for x in range(1, len(approvals) + 1)]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    await query.edit_message_text(reply, reply_markup=reply_markup)
 
     return GET_LIST_OF_OFFERS_PAGE
