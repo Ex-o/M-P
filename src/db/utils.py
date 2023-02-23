@@ -29,7 +29,7 @@ def set_offer(loc_destination, loc_source, cost, user_id):
 def get_own_offers(user_id):
     with db() as db_ctx:
         db_ctx.execute(
-            f"SELECT * FROM offers WHERE id = '{user_id}' AND status != 'completed';"
+            f"SELECT * FROM offers WHERE user_id = '{user_id}' AND status != 'completed';"
         )
         return db_ctx.fetchall()
 

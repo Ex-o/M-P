@@ -19,7 +19,7 @@ async def get_list_of_own_offers_handler(update: Update, context: ContextTypes.D
 
     user_id = update.effective_user.id
     offers = get_own_offers(user_id)
-    logging.info(user_id)
+
     if len(offers) == 0:
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Go back", callback_data=str(9999))]])
         await query.edit_message_text(
