@@ -24,6 +24,7 @@ SENDER_STATE = {
         CallbackQueryHandler(get_approvals_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(create_offer_handler, pattern="^" + str(3) + "$"),
         CallbackQueryHandler(cancel_offer_handler, pattern="^" + str(4) + "$"),
+        CallbackQueryHandler(end_handler, pattern="^" + str(9999) + "S")
     ]
 }
 
