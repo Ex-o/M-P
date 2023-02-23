@@ -6,7 +6,8 @@ from ..modules.courier import courier_handler
 from ..modules.create_offer import create_offer_handler, meeting_place_handler, food_place_handler, payment_handler
 from ..modules.end import end_handler
 from ..data.pages import *
-from ..modules.get_list_of_offers import get_list_of_offers_handler, ready_to_complete_handler
+from ..modules.get_list_of_offers import get_list_of_others_offers_handler, ready_to_complete_handler, \
+    get_list_of_own_offers_handler
 from ..modules.sender import sender_handler
 from ..modules.approve_offers import get_approvals_handler, confirm_approval_handler, approve_offer_handler
 
@@ -19,7 +20,7 @@ START_STATE = {
 
 SENDER_STATE = {
     SENDER_PAGE: [
-        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
+        CallbackQueryHandler(get_list_of_own_offers_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(get_approvals_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(create_offer_handler, pattern="^" + str(3) + "$"),
         CallbackQueryHandler(cancel_offer_handler, pattern="^" + str(4) + "$"),
@@ -28,7 +29,7 @@ SENDER_STATE = {
 
 COURIER_STATE = {
     COURIER_PAGE: [
-        CallbackQueryHandler(get_list_of_offers_handler, pattern="^" + str(1) + "$"),
+        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(active_offers_handler, pattern="^" + str(3) + "$"),
     ],
@@ -55,9 +56,9 @@ CREATE_OFFER_STATE = {
 GET_LIST_OF_OFFERS_STATE = {
     GET_LIST_OF_OFFERS_PAGE: [
         CallbackQueryHandler(ready_to_complete_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(get_list_of_offers_handler, pattern="^" + str(2) + "$"),
+        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(end_handler, pattern="^" + str(3) + "$"),
-        CallbackQueryHandler(get_list_of_offers_handler, pattern="^" + str(4) + "$"),
+        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^" + str(4) + "$"),
     ],
 }
 

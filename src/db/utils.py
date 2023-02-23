@@ -26,6 +26,14 @@ def set_offer(loc_destination, loc_source, cost, user_id):
             f'VALUES (\'{loc_destination}\', \'{loc_source}\', \'{cost}\', \'{user_id}\');')
 
 
+def get_own_offers(user_id):
+    with db() as db_ctx:
+        db_ctx.execute(
+            f"SELECT * FROM offers WHERE id = '{user_id}' AND status != 'completed';"
+        )
+        return db_ctx.fetchall()
+
+
 def get_offers_since(last_id):
     with db() as db_ctx:
         db_ctx.execute(

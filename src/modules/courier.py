@@ -1,7 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackQueryHandler, ContextTypes
 from .end import end_handler
-from .get_list_of_offers import get_list_of_offers_handler
+from .get_list_of_offers import get_list_of_others_offers_handler
 from .active_offers import active_offers_handler
 
 from src.data.pages import *

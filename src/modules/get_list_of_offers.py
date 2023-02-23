@@ -1,7 +1,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, CallbackQueryHandler
 
-from ..db.utils import get_offers_since, get_user, update_last_offer_of_user, set_offer_match
+from ..db.utils import get_offers_since, get_user, update_last_offer_of_user, set_offer_match, get_own_offers
 from ..utils.util import to_offer
 from ..data.pages import *
 
@@ -11,7 +11,31 @@ def _get_filters():
     return None
 
 
-async def get_list_of_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def get_list_of_own_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    query = update.callback_query
+    await query.answer()
+
+    user_id = update.effective_user.id
+    offers = get_own_offers(user_id)
+
+    if len(offers) == 0:
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Go back", callback_data=str(3))]])
+        await query.edit_message_text(
+            text='You don\'t have any active offers! Go back and create some!', reply_markup=reply_markup
+        )
+        return SENDER_PAGE
+
+    keyboard = [
+        [InlineKeyboardButton("Go back", callback_data=str(3))],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await query.edit_message_text(
+        text=to_offer(offers), reply_markup=reply_markup
+    )
+    return SENDER_PAGE
+
+
+async def get_list_of_others_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
 
     filters = _get_filters()
