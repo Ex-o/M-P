@@ -61,4 +61,4 @@ def get_ll_from_yandex_url(url):
     bs = BeautifulSoup(response.content, features="html.parser")
     test = bs.find("script", {"class": "state-view"}).next
     js = json.loads(test)
-    return js['config']['query']['ll'].split(',')
+    return js['map']['location']['center']
