@@ -1,9 +1,9 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
 
-from src.data.pages import *
-from src.db.utils import get_needs_approval_list
-from src.utils.util import to_approval
+from ..data.pages import *
+from ..db.utils import get_needs_approval_list
+from ..utils.util import to_approval
 
 
 async def approve_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:

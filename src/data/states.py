@@ -88,3 +88,10 @@ OFFER_APPROVAL_STATE = {
         CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
     ]
 }
+
+FILTERS_STATE = {
+    FILTERS_PAGE: [
+        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
+        CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
+    ]
+}

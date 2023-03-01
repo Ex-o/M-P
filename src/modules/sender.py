@@ -4,7 +4,7 @@ Sender main page
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
-from src.data.pages import *
+from ..data.pages import *
 
 async def sender_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query

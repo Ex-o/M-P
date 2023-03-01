@@ -1,6 +1,5 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import CallbackQueryHandler, ContextTypes
-from .end import end_handler
+from telegram.ext import ContextTypes
 from ..utils.util import to_offer
 from ..db.utils import get_offers
 
