@@ -1,6 +1,6 @@
 from telegram import InlineKeyboardButton
 from typing import Union, List
-
+from geopy.distance import geodesic
 
 def build_menu(
         buttons: List[InlineKeyboardButton],
@@ -30,3 +30,17 @@ def to_offer(filters):
                f"Pays: {filter['cost']}\n\n"
 
     return res
+
+
+def _dist(a, b):
+    return geodesic((a['lat'], a['lon']), (b['lat'], b['lon'])).m
+
+
+def _min_dist(offer, filters):
+    return min([_dist(offer, filter) for filter in filters])
+
+
+def filter_offers(offers, filters):
+    if not filters:
+        return offers
+    return [offer for offer in offers if _min_dist(offer, filters) < 0.1]

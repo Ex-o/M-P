@@ -4,7 +4,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from ..db.utils import get_offers_since, get_user, update_last_offer_of_user, set_offer_match, get_own_offers
-from ..utils.util import to_offer
+from ..utils.util import to_offer, filter_offers
 from ..data.pages import *
 
 
@@ -42,9 +42,7 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
 
     filters = _get_filters()
     offers = get_offers_since(get_user(user.id)['last_offer'])
-
-    if filters:
-        offers = [offer for offer in offers if offer[0] in filters]
+    offers = filter_offers(offers, filters)
 
     offer = offers[0] if len(offers) > 0 else None
 

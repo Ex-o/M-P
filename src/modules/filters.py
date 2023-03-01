@@ -1,6 +1,5 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
-from geopy.distance import geodesic
 
 from ..data.pages import *
 from ..utils.maps import get_ll_from_yandex_url
@@ -40,16 +39,12 @@ async def accept_filter_handler(update: Update, context: ContextTypes.DEFAULT_TY
 
     add_filter(user_id, lat, lon, link)
 
-    await update.message.reply_text(
-        'Your filter was successfully added'
-    )
-
     keyboard = [
         [InlineKeyboardButton("Add new location", callback_data=str(1))],
         [InlineKeyboardButton("Delete location", callback_data=str(2))],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    await update.message.reply_text('Welcome', reply_markup=reply_markup)
+    await update.message.reply_text('Your filter was successfully added', reply_markup=reply_markup)
 
     FILTERS_PAGE
