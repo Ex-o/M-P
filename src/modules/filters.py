@@ -4,7 +4,7 @@ from telegram.ext import ContextTypes
 from ..data.pages import *
 
 
-async def courier_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def filters_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
     await query.answer()
 

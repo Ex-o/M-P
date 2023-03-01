@@ -10,6 +10,7 @@ from ..modules.get_list_of_offers import get_list_of_others_offers_handler, read
     get_list_of_own_offers_handler
 from ..modules.sender import sender_handler
 from ..modules.approve_offers import get_approvals_handler, confirm_approval_handler, approve_offer_handler
+from ..modules.filters import filters_handler
 
 START_STATE = {
     START_PAGE: [
@@ -31,7 +32,7 @@ SENDER_STATE = {
 COURIER_STATE = {
     COURIER_PAGE: [
         CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
+        CallbackQueryHandler(filters_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(active_offers_handler, pattern="^" + str(3) + "$"),
     ],
 }
