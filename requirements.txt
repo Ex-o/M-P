@@ -2,3 +2,4 @@ python-telegram-bot[webhooks]
 psycopg2
 requests
 bs4
+geopy

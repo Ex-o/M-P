@@ -10,7 +10,7 @@ from ..modules.get_list_of_offers import get_list_of_others_offers_handler, read
     get_list_of_own_offers_handler
 from ..modules.sender import sender_handler
 from ..modules.approve_offers import get_approvals_handler, confirm_approval_handler, approve_offer_handler
-from ..modules.filters import filters_handler
+from ..modules.filters import filters_handler, add_filter_handler, accept_filter_handler
 
 START_STATE = {
     START_PAGE: [
@@ -92,7 +92,12 @@ OFFER_APPROVAL_STATE = {
 
 FILTERS_STATE = {
     FILTERS_PAGE: [
-        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
+        CallbackQueryHandler(add_filter_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(end_handler, pattern="^" + str(2) + "$"),
+    ],
+    FILTERS_ADD_PAGE: [
+        MessageHandler(
+            filters.TEXT & ~filters.COMMAND, accept_filter_handler
+        )
     ]
 }

@@ -87,3 +87,11 @@ def set_offer_match(user_id, offer_id):
             'INSERT INTO matched_offers (user_id, offer_id) '
             f'VALUES (\'{user_id}\', \'{offer_id}\');'
         )
+
+
+def add_filter(user_id, lat, lon, link, info=""):
+    with db() as db_ctx:
+        db_ctx.execute(
+            'INSERT INTO filters (user_id, lat, lon, link, info) '
+            f'VALUES (\'{user_id}\', \'{lat}\', \'{lon}\', \'{link}\', \'{info}\');'
+        )
