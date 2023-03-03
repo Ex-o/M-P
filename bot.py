@@ -12,6 +12,7 @@ Basic Echobot example, repeats messages.
 Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
+import sys
 
 from telegram import __version__ as TG_VER
 
@@ -37,6 +38,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, Conversation
 from src.modules.start import start_handler
 from src.modules.help import help_handler
 from src.data.states import *
+from subprocess import Popen, PIPE
 
 # Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
 logging.basicConfig(
@@ -51,6 +53,7 @@ PORT = int(os.environ.get('PORT', 5000))
 def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
+    Popen([sys.executable, "-m", "playwright", "install"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     application = Application.builder().token(TOKEN).build()
 
     # on different commands - answer in Telegram
