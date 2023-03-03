@@ -35,7 +35,7 @@ async def add_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
 async def accept_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     link = update.message.text
     user_id = update.effective_user.id
-    lon, lat = get_ll_from_yandex_url(link)
+    lon, lat = await get_ll_from_yandex_url(link)
 
     add_filter(user_id, lat, lon, link)
 
