@@ -54,6 +54,7 @@ def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
     Popen([sys.executable, "-m", "playwright", "install"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+
     application = Application.builder().token(TOKEN).build()
 
     # on different commands - answer in Telegram

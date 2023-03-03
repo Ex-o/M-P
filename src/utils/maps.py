@@ -11,7 +11,9 @@ async def get_ll_from_yandex_url(url):
         browser = await browser_type.launch()
         page = await browser.new_page()
         await page.goto(url)
-        bs = BeautifulSoup(await page.content(), features="html.parser")
+        src = await page.content()
+        print(src)
+        bs = BeautifulSoup(src, features="html.parser")
         test = bs.find("script", {"class": "state-view"}).next
         js = json.loads(test)
         return js['map']['location']['center']
