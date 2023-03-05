@@ -4,11 +4,11 @@ from .db_context import DBConn as db
 # TODO: prevent sql injection
 
 
-def register_user(telegram_id, full_name):
+def register_user(telegram_id, full_name, chat_id):
     with db() as db_ctx:
         db_ctx.execute(
-            'INSERT INTO users (id, full_name) '
-            f'VALUES(\'{telegram_id}\', \'{full_name}\') '
+            'INSERT INTO users (id, full_name, chat_id) '
+            f'VALUES(\'{telegram_id}\', \'{full_name}\', \'{chat_id}\') '
             f'ON CONFLICT (id) DO UPDATE SET full_name = EXCLUDED.full_name;')
 
 
