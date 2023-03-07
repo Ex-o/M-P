@@ -109,7 +109,7 @@ async def main() -> None:
     # Here we set updater to None because we want our custom webhook server to handle the updates
     # and hence we don't need an Updater instance
     application = (
-        Application.builder().token("TOKEN").updater(None).context_types(context_types).build()
+        Application.builder().token(TOKEN).updater(None).context_types(context_types).build()
     )
     # save the values in `bot_data` such that we may easily access them in the callbacks
     application.bot_data["url"] = url
