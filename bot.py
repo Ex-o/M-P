@@ -19,6 +19,7 @@ from http import HTTPStatus
 
 import uvicorn
 from starlette.applications import Starlette
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse, Response
 from starlette.routing import Route
@@ -179,6 +180,13 @@ async def main() -> None:
             Route("/healthcheck", health, methods=["GET"]),
             Route("/submitpayload", custom_updates, methods=["POST", "GET"]),
         ]
+    )
+    starlette_app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
     webserver = uvicorn.Server(
         config=uvicorn.Config(
