@@ -1,4 +1,6 @@
-from telegram import Update
+import uuid
+
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
 from ..db.utils import set_offer
 
@@ -6,6 +8,30 @@ from ..data.pages import *
 
 
 async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Show new choice of buttons"""
+    query = update.callback_query
+    await query.answer()
+    keyboard = [
+        [InlineKeyboardButton("🍔 Food", callback_data=str(1))],
+        [InlineKeyboardButton("📙 Other (Specify details)", callback_data=str(2))],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await query.edit_message_text(
+        text="Choose your offer type", reply_markup=reply_markup
+    )
+    return ORDER_TYPE_SELECT_PAGE
+
+
+async def create_food_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    query = update.callback_query
+    await query.answer()
+
+    await query.edit_message_text(
+        text=f"Go to https://hitchy-web.herokuapp.com/?orderId={uuid.uuid1()} and submit your order!"
+    )
+    return ConversationHandler.END
+
+async def create_other_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
     await query.answer()
     await query.edit_message_text(
