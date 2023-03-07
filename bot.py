@@ -13,6 +13,14 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 import sys
+import asyncio
+from http import HTTPStatus
+
+import uvicorn
+from starlette.applications import Starlette
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse, Response
+from starlette.routing import Route
 
 from telegram import __version__ as TG_VER
 
@@ -79,6 +87,30 @@ def main() -> None:
                             url_path=TOKEN,
                             webhook_url='https://boiling-ravine-21139.herokuapp.com/' + TOKEN)
 
+    async def custom_updates(request: Request) -> PlainTextResponse:
+        """
+        Handle incoming webhook updates by also putting them into the `update_queue` if
+        the required parameters were passed correctly.
+        """
+        logger.info(request)
+
+    starlette_app = Starlette(
+        routes=[
+            Route("/bgk", custom_updates, methods=["POST", "GET"]),
+        ]
+    )
+
+    webserver = uvicorn.Server(
+        config=uvicorn.Config(
+            app=starlette_app,
+            port=80,
+            use_colors=False,
+            host="https://boiling-ravine-21139.herokuapp.com",
+        )
+    )
+
+    await webserver.serve()
+
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
