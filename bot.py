@@ -186,7 +186,7 @@ async def main() -> None:
             app=starlette_app,
             port=port,
             use_colors=False,
-            host="https://boiling-ravine-21139.herokuapp.com",
+            host="0.0.0.0",
         )
     )
 
