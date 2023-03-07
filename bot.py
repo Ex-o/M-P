@@ -147,7 +147,7 @@ async def main() -> None:
 
     async def custom_updates(request: Request) -> PlainTextResponse:
 
-        logger.info(request)
+        logger.debug(request)
         return PlainTextResponse("Thank you for the submission! It's being forwarded.")
         """
         Handle incoming webhook updates by also putting them into the `update_queue` if
