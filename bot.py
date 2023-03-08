@@ -159,6 +159,7 @@ async def main() -> None:
         order_json = await request.json()
         order = get_order_by_hash(order_json["orderId"])
 
+        logger.info(order_json)
         if len(order) == 0:
             return PlainTextResponse("Incorrect hash!")
         orders = [x for x in order_json["selections"] if x[1] > 0]
