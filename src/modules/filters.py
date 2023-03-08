@@ -55,7 +55,7 @@ async def delete_filter_handler(update: Update, context: ContextTypes.DEFAULT_TY
     await query.answer()
 
     user_id = update.effective_user.id
-    filters = get_filters(user_id)
+    filters = await get_filters(user_id)
 
     keyboard = [[InlineKeyboardButton(filter['link'], callback_data=str(filter['id']))]
                 for filter in filters]
@@ -72,7 +72,7 @@ async def confirm_delete_filter_handler(update: Update, context: ContextTypes.DE
     query = update.callback_query
     await query.answer()
 
-    delete_filter(query.data)
+    await delete_filter(query.data)
 
     keyboard = [
         [InlineKeyboardButton("Add new location", callback_data=str(1))],
@@ -80,6 +80,6 @@ async def confirm_delete_filter_handler(update: Update, context: ContextTypes.DE
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    await update.message.reply_text('Your filter was successfully deleted', reply_markup=reply_markup)
+    await query.edit_message_text('Your filter was successfully deleted', reply_markup=reply_markup)
 
-    FILTERS_PAGE
+    return FILTERS_PAGE

@@ -1,10 +1,7 @@
 python-telegram-bot[webhooks]
 psycopg2
 requests
-bs4
 geopy
-beautifulsoup4
-playwright
 uvicorn
 starlette
 googlemaps
