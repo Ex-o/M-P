@@ -29,6 +29,7 @@ from telegram import __version__ as TG_VER, Update, PreCheckoutQuery
 from telegram.constants import ParseMode
 
 from src.db.utils import get_order_by_hash, set_order_details
+from src.modules.webapp_processor import custom_updates
 
 try:
     from telegram import __version_info__
@@ -154,19 +155,6 @@ async def main() -> None:
             Update.de_json(data=await request.json(), bot=application.bot)
         )
         return Response()
-
-    async def custom_updates(request: Request) -> PlainTextResponse:
-        order_json = await request.json()
-        order = get_order_by_hash(order_json["orderId"])
-
-        logger.info(order_json)
-        if len(order) == 0:
-            return PlainTextResponse("Incorrect hash!")
-        orders = [x for x in order_json["selections"].items() if x[1] > 0]
-
-        order_id = order['id']
-        set_order_details(order_id, json.dumps(orders))
-        return PlainTextResponse("Thank you for the submission! It's being forwarded.")
 
     async def health(_: Request) -> PlainTextResponse:
         """For the health endpoint, reply with a simple plain text message."""
