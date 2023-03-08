@@ -161,7 +161,7 @@ async def main() -> None:
         if len(order) == 0:
             return PlainTextResponse("Incorrect hash!")
 
-        order_ids = [x[0] for x in order["selections"]]
+        order_ids = [x[0] for x in order_json["selections"]]
         logger.info(order_ids)
         return PlainTextResponse("Thank you for the submission! It's being forwarded.")
 
