@@ -60,7 +60,7 @@ def get_offers_by_status(status, user_id):
         db_ctx.execute(
             f"SELECT offers.loc_destination, offers.loc_source, offers.cost, offers.id FROM offers "
             f"LEFT JOIN matched_offers ON offer_id = offers.id WHERE status = \'{status}\' "
-            f"AND matched_offers.user_id != {user_id} "
+            f"AND (matched_offers.user_id != {user_id} OR matched_offers.user_id IS NULL) "
             f"AND offers.user_id != {user_id};")
 
         return db_ctx.fetchall()
