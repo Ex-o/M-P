@@ -19,6 +19,13 @@ def get_user(user_id):
         return db_ctx.fetchone()
 
 
+def set_order_details(id, json):
+    with db() as db_ctx:
+        db_ctx.execute(
+            f'UPDATE offers SET details = \'{json}\' WHERE id = \'{id}\';'
+        )
+
+
 def get_order_by_hash(food_hash):
     with db() as db_ctx:
         db_ctx.execute(

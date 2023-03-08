@@ -12,6 +12,7 @@ Basic Echobot example, repeats messages.
 Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
+import json
 import sys
 import asyncio
 from dataclasses import dataclass
@@ -27,7 +28,7 @@ from starlette.routing import Route
 from telegram import __version__ as TG_VER, Update, PreCheckoutQuery
 from telegram.constants import ParseMode
 
-from src.db.utils import get_order_by_hash
+from src.db.utils import get_order_by_hash, set_order_details
 
 try:
     from telegram import __version_info__
@@ -160,9 +161,10 @@ async def main() -> None:
 
         if len(order) == 0:
             return PlainTextResponse("Incorrect hash!")
+        orders = [x for x in order_json["selections"] if x[1] > 0]
 
-        order_ids = [x[0] for x in order_json["selections"]]
-        logger.info(order_ids)
+        order_id = order['id']
+        set_order_details(order_id, json.dumps(orders))
         return PlainTextResponse("Thank you for the submission! It's being forwarded.")
 
     async def health(_: Request) -> PlainTextResponse:
