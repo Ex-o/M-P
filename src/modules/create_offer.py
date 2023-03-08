@@ -77,16 +77,14 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
                                                   currency="RUB",
                                                   payload="ok, some payload",
                                                   prices=[LabeledPrice(label="lable 1", amount=300 * 100),
-                                                          LabeledPrice(label="lable 2", amount=200 * 100)])
+                                                          LabeledPrice(label="lable 2", amount=200 * 100)],
+                                       need_shipping_address=True)
 
-    return PAYMENT_PAGE_2
+    return ConversationHandler.END
 
 
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.reply_text(
-        'Thanks for ' + update.message.text + ' payment braza'
-    )
-
+    await update.message.forward(update.message.chat_id)
     return ConversationHandler.END
 
 

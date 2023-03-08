@@ -49,7 +49,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, Conversation
 from src.modules.start import start_handler
 from src.modules.help import help_handler
 from src.data.states import *
-from src.modules.create_offer import pre_checkout_handler
+from src.modules.create_offer import pre_checkout_handler, accept_payment_handler
 from subprocess import Popen, PIPE
 
 # Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -136,6 +136,10 @@ async def main() -> None:
     application.add_handler(conv_handler)
     application.add_handler(TypeHandler(type=WebhookUpdate, callback=webhook_update))
     application.add_handler(PreCheckoutQueryHandler(callback=pre_checkout_handler))
+
+    application.add_handler(MessageHandler(
+            filters.SUCCESSFUL_PAYMENT & ~filters.COMMAND, accept_payment_handler
+    ))
 
     # Pass webhook settings to telegram
     await application.bot.set_webhook(url=f"{url}/telegram")

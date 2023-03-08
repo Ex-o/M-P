@@ -57,11 +57,6 @@ CREATE_OFFER_STATE = {
         MessageHandler(
             filters.TEXT & ~filters.COMMAND, payment_handler
         )
-    ],
-    PAYMENT_PAGE_2: [
-        MessageHandler(
-            filters.SUCCESSFUL_PAYMENT & ~filters.COMMAND, accept_payment_handler
-        )
     ]
 }
 
