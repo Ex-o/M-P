@@ -34,7 +34,7 @@ class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
 
 
 async def webhook_update(update: WebhookUpdate, context: CustomContext) -> None:
-    orders = [x for x in json.loads(update.order_details).items() if x[1] > 0]
+    orders = [x for x in update.order_details.items() if x[1] > 0]
     set_order_details(update.order_id, json.dumps(orders))
 
     await context.bot.send_message(update.user_id, "THANKS FOR MAKING ORDER NIGGA")
