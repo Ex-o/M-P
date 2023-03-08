@@ -76,8 +76,8 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
                                                   description="some description mafaka",
                                                   currency="RUB",
                                                   payload="ok, some payload",
-                                                  prices=[LabeledPrice(label="lable 1", amount=300),
-                                                          LabeledPrice(label="lable 2", amount=200)])
+                                                  prices=[LabeledPrice(label="lable 1", amount=300 * 100),
+                                                          LabeledPrice(label="lable 2", amount=200 * 100)])
 
     return PAYMENT_PAGE_2
 
