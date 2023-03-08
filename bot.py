@@ -155,7 +155,7 @@ async def main() -> None:
         return Response()
 
     async def custom_updates(request: Request) -> PlainTextResponse:
-        order_json = request.json()
+        order_json = await request.json()
         order = get_order_by_hash(order_json["orderId"])
 
         if len(order) == 0:
@@ -163,9 +163,7 @@ async def main() -> None:
 
         order_ids = [x[0] for x in order["selections"]]
         logger.info(order_ids)
-
         return PlainTextResponse("Thank you for the submission! It's being forwarded.")
-
 
     async def health(_: Request) -> PlainTextResponse:
         """For the health endpoint, reply with a simple plain text message."""
