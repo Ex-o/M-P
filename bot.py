@@ -29,7 +29,7 @@ from telegram import __version__ as TG_VER, Update, PreCheckoutQuery
 from telegram.constants import ParseMode
 
 from src.db.utils import get_order_by_hash, set_order_details
-from src.modules.webapp_processor import custom_updates
+from src.modules.webapp_processor import WebhookUpdate, CustomContext, webhook_update
 
 try:
     from telegram import __version_info__
@@ -64,45 +64,6 @@ logger = logging.getLogger(__name__)
 
 TOKEN = os.environ['TG_TOKEN']
 PORT = int(os.environ.get('PORT', 5000))
-
-@dataclass
-class WebhookUpdate:
-    """Simple dataclass to wrap a custom update type"""
-
-    user_id: int
-    payload: str
-
-
-class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
-    """
-    Custom CallbackContext class that makes `user_data` available for updates of type
-    `WebhookUpdate`.
-    """
-
-    @classmethod
-    def from_update(
-        cls,
-        update: object,
-        application: "Application",
-    ) -> "CustomContext":
-        if isinstance(update, WebhookUpdate):
-            return cls(application=application, user_id=update.user_id)
-        return super().from_update(update, application)
-
-
-async def webhook_update(update: WebhookUpdate, context: CustomContext) -> None:
-    """Callback that handles the custom updates."""
-    chat_member = await context.bot.get_chat_member(chat_id=update.user_id, user_id=update.user_id)
-    payloads = context.user_data.setdefault("payloads", [])
-    payloads.append(update.payload)
-    combined_payloads = "</code>\n• <code>".join(payloads)
-    text = (
-        f"The user {chat_member.user.mention_html()} has sent a new payload. "
-        f"So far they have sent the following payloads: \n\n• <code>{combined_payloads}</code>"
-    )
-    await context.bot.send_message(
-        chat_id=context.bot_data["admin_chat_id"], text=text, parse_mode=ParseMode.HTML
-    )
 
 
 async def main() -> None:
@@ -155,6 +116,17 @@ async def main() -> None:
             Update.de_json(data=await request.json(), bot=application.bot)
         )
         return Response()
+
+    async def custom_updates(request: Request) -> PlainTextResponse:
+        order_json = await request.json()
+        order = get_order_by_hash(order_json["orderId"])
+
+        if len(order) == 0:
+            return PlainTextResponse("Incorrect hash!")
+
+        await application.update_queue.put(WebhookUpdate(user_id=order["user_id"],
+                                                         order_id=order_json["orderId"],
+                                                         order_details=order_json["selections"]))
 
     async def health(_: Request) -> PlainTextResponse:
         """For the health endpoint, reply with a simple plain text message."""
