@@ -7,13 +7,13 @@ G_MAPS = googlemaps.Client(key=API_KEY)
 
 
 async def get_point(address):
-    result = G_MAPS.geocode(address)
+    results = G_MAPS.places(address)['results']
 
-    if len(result) == 0:
+    if len(results) == 0:
         return None
 
     return {
-        'formatted_address': result[0]['formatted_address'],
-        'lat': result[0]['geometry']['location']['lat'],
-        'lon': result[0]['geometry']['location']['lng']
+        'formatted_address': results[0]['formatted_address'],
+        'lat': results[0]['geometry']['location']['lat'],
+        'lon': results[0]['geometry']['location']['lng']
     }

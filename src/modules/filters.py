@@ -47,7 +47,7 @@ async def accept_filter_handler(update: Update, context: ContextTypes.DEFAULT_TY
 
     await update.message.reply_text('Your filter was successfully added', reply_markup=reply_markup)
 
-    FILTERS_PAGE
+    return FILTERS_PAGE
 
 
 async def delete_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
