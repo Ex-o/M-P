@@ -95,6 +95,13 @@ def get_offers(user_id):
         return db_ctx.fetchall()
 
 
+def get_menu_items(id_list):
+    with db() as db_ctx:
+        db_ctx.execute(
+            f"SELECT shop, title, price, currency FROM menu WHERE id IN ({','.join(['''{0}'''.format(x) for x in id_list])})"
+        )
+    return db_ctx.fetchall()
+
 def update_last_offer_of_user(user_id, last_offer_id):
     with db() as db_ctx:
         db_ctx.execute(
