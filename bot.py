@@ -27,6 +27,8 @@ from starlette.routing import Route
 from telegram import __version__ as TG_VER, Update, PreCheckoutQuery
 from telegram.constants import ParseMode
 
+from src.db.utils import get_order_by_hash
+
 try:
     from telegram import __version_info__
 except ImportError:
@@ -153,28 +155,17 @@ async def main() -> None:
         return Response()
 
     async def custom_updates(request: Request) -> PlainTextResponse:
+        order_json = request.json()
+        order = get_order_by_hash(order_json["orderId"])
 
-        logger.info(await request.body())
+        if len(order) == 0:
+            return PlainTextResponse("Incorrect hash!")
+
+        order_ids = [x[0] for x in order["selections"]]
+        logger.info(order_ids)
+
         return PlainTextResponse("Thank you for the submission! It's being forwarded.")
-        """
-        Handle incoming webhook updates by also putting them into the `update_queue` if
-        the required parameters were passed correctly.
-        """
-        try:
-            user_id = int(request.query_params["user_id"])
-            payload = request.query_params["payload"]
-        except KeyError:
-            return PlainTextResponse(
-                status_code=HTTPStatus.BAD_REQUEST,
-                content="Please pass both `user_id` and `payload` as query parameters.",
-            )
-        except ValueError:
-            return PlainTextResponse(
-                status_code=HTTPStatus.BAD_REQUEST,
-                content="The `user_id` must be a string!",
-            )
 
-        await application.update_queue.put(WebhookUpdate(user_id=user_id, payload=payload))
 
     async def health(_: Request) -> PlainTextResponse:
         """For the health endpoint, reply with a simple plain text message."""

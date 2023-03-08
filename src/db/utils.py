@@ -19,6 +19,13 @@ def get_user(user_id):
         return db_ctx.fetchone()
 
 
+def get_order_by_hash(food_hash):
+    with db() as db_ctx:
+        db_ctx.execute(
+            f'SELECT id, user_id FROM orders WHERE food_hash = \'{food_hash}\';')
+        return db_ctx.fetchone()
+
+
 def add_pending_food_offer(user_id, food_hash, loc_destination, loc_source):
     with db() as db_ctx:
         db_ctx.execute(

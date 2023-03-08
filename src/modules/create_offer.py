@@ -3,7 +3,7 @@ import uuid
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, LabeledPrice
 from telegram.ext import ContextTypes, ConversationHandler
-from ..db.utils import set_offer
+from ..db.utils import set_offer, add_pending_food_offer
 
 from ..data.pages import *
 
@@ -33,8 +33,11 @@ async def create_food_offer_handler(update: Update, context: ContextTypes.DEFAUL
     query = update.callback_query
     await query.answer()
 
+    uid = uuid.uuid1()
+    add_pending_food_offer(update.effective_user.id, uid, "BGK", context.user_data['loc_source'])
+
     await query.edit_message_text(
-        text=f"Go to https://hitchy-web.herokuapp.com/?orderId={uuid.uuid1()} and submit your order!"
+        text=f"Go to https://hitchy-web.herokuapp.com/?orderId={uid} and submit your order!"
     )
     return ConversationHandler.END
 
