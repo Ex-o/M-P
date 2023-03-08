@@ -162,7 +162,7 @@ async def main() -> None:
         logger.info(order_json)
         if len(order) == 0:
             return PlainTextResponse("Incorrect hash!")
-        orders = [x for x in order_json["selections"] if x[1] > 0]
+        orders = [x for x in order_json["selections"].items() if x[1] > 0]
 
         order_id = order['id']
         set_order_details(order_id, json.dumps(orders))
