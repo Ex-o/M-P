@@ -72,7 +72,7 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     update.message.sender_chat.send_invoice()
     set_offer(loc_destination, loc_source, cost, user_id)
 
-    await update.message.sender_chat.send_invoice(provider_token=PROVIDER_TEST_TOKEN,
+    await update.message.reply_invoice(provider_token=PROVIDER_TEST_TOKEN,
                                                   title="PAY THIS TEST title",
                                                   description="some description mafaka",
                                                   currency="RUB",
