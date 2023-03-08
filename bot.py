@@ -49,6 +49,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, Conversation
 from src.modules.start import start_handler
 from src.modules.help import help_handler
 from src.data.states import *
+from src.modules.create_offer import pre_checkout_handler
 from subprocess import Popen, PIPE
 
 # Enable loggingccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -100,7 +101,7 @@ async def webhook_update(update: WebhookUpdate, context: CustomContext) -> None:
     )
 
 
-async def main(pre_checkout_handler=None) -> None:
+async def main() -> None:
     """Set up the application and a custom webserver."""
     url = "https://boiling-ravine-21139.herokuapp.com"
     admin_chat_id = 123456
