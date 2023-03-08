@@ -55,7 +55,7 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
     context.user_data['pending_offers'] = {}
 
     for idx, offer in enumerate(offers, start=1):
-        reply += f'{idx}. {to_offer(offer)}'
+        reply += f'{idx}. {to_offer([offer])}'
         context.user_data['pending_offers'][idx] = offer['id']
 
     keyboard = [[InlineKeyboardButton(f"Accept {x}",

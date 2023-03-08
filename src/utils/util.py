@@ -21,13 +21,13 @@ def to_approval(row):
           f"{row['loc_destination']} to {row['loc_source']} for {row['cost']} rubles!\n\n"
 
 
-def to_offer(filters):
+def to_offer(offeres):
     res = ""
-    for filter in filters:
+    for offer in offeres:
         res += 'Offer:\n' \
-               f"Details: {str(filter['id'])}\n" \
-               f"Needs to be delivered to: {filter['loc_destination']}\n" \
-               f"Pays: {filter['cost']}\n\n"
+               f"Details: {offer['id']}\n" \
+               f"Needs to be delivered to: {offer['loc_destination']}\n" \
+               f"Pays: {offer['cost']}\n\n"
 
     return res
 
