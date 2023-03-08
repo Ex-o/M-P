@@ -65,7 +65,7 @@ GET_LIST_OF_OFFERS_STATE = {
     GET_LIST_OF_OFFERS_PAGE: [
         CallbackQueryHandler(ready_to_complete_handler, pattern="^(0|[1-9][0-9]*)$"),
         CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^(accept_more|go_back)$"),
-        CallbackQueryHandler(end_handler(), pattern="^end$"),
+        CallbackQueryHandler(end_handler, pattern="^end$"),
     ],
 }
 
