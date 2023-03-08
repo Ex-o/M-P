@@ -5,7 +5,7 @@ from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 from telegram.ext import CallbackContext, ExtBot
 
-from src.db.utils import get_order_by_hash, set_offer_details
+from src.db.utils import set_offer_details
 
 @dataclass
 class WebhookUpdate:

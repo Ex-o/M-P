@@ -127,7 +127,7 @@ async def main() -> None:
         await application.update_queue.put(WebhookUpdate(user_id=offer["user_id"],
                                                          offer_id=offer["id"],
                                                          food_hash=offer_json["orderId"],
-                                                         order_details=offer_json["selections"]))
+                                                         offer_details=offer_json["selections"]))
 
     async def health(_: Request) -> PlainTextResponse:
         """For the health endpoint, reply with a simple plain text message."""
