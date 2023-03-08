@@ -22,7 +22,7 @@ def get_user(user_id):
 def get_order_by_hash(food_hash):
     with db() as db_ctx:
         db_ctx.execute(
-            f'SELECT id, user_id FROM orders WHERE food_hash = \'{food_hash}\';')
+            f'SELECT id, user_id FROM offers WHERE food_hash = \'{food_hash}\';')
         return db_ctx.fetchone()
 
 
