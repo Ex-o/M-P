@@ -19,6 +19,13 @@ def get_user(user_id):
         return db_ctx.fetchone()
 
 
+def add_pending_food_offer(user_id, food_hash, loc_destination, loc_source):
+    with db() as db_ctx:
+        db_ctx.execute(
+            'INSERT INTO offers (loc_destination, loc_source, food_hash, user_id) '
+            f'VALUES (\'{loc_destination}\', \'{loc_source}\', \'{food_hash}\', \'{user_id}\');')
+
+
 def set_offer(loc_destination, loc_source, cost, user_id):
     with db() as db_ctx:
         db_ctx.execute(

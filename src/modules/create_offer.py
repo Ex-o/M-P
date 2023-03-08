@@ -8,18 +8,21 @@ from ..data.pages import *
 
 
 async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Show new choice of buttons"""
     query = update.callback_query
     await query.answer()
-    keyboard = [
-        [InlineKeyboardButton("🍔 Food", callback_data=str(1))],
-        [InlineKeyboardButton("📙 Other (Specify details)", callback_data=str(2))],
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
-        text="Choose your offer type", reply_markup=reply_markup
+        'Alright, please specify where you want to meet the courier in Innopolis'
     )
-    return ORDER_TYPE_SELECT_PAGE
+    return MEETING_PLACE_PAGE
+
+
+async def create_other_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(
+        'Alright, please specify where you want the courier to go'
+    )
+    return OTHER_OFFER_PAGE
 
 
 async def create_food_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -31,23 +34,20 @@ async def create_food_offer_handler(update: Update, context: ContextTypes.DEFAUL
     )
     return ConversationHandler.END
 
-async def create_other_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    query = update.callback_query
-    await query.answer()
-    await query.edit_message_text(
-        'Alright, please specify where you want to meet the courier in Innopolis'
-    )
-    return MEETING_PLACE_PAGE
-
 
 async def meeting_place_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     text = update.message.text
     context.user_data['loc_source'] = text
 
+    keyboard = [
+        [InlineKeyboardButton("🍔 Food", callback_data=str(1))],
+        [InlineKeyboardButton("📙 Other (Specify details)", callback_data=str(2))],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-        'Please specify from where you want to get your food and the list of foods respectively :)'
+        text="Choose your offer type", reply_markup=reply_markup
     )
-    return FOOD_PAGE
+    return ORDER_TYPE_SELECT_PAGE
 
 
 async def food_place_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
