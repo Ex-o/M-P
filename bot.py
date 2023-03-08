@@ -100,7 +100,7 @@ async def webhook_update(update: WebhookUpdate, context: CustomContext) -> None:
     )
 
 
-async def main() -> None:
+async def main(pre_checkout_handler=None) -> None:
     """Set up the application and a custom webserver."""
     url = "https://boiling-ravine-21139.herokuapp.com"
     admin_chat_id = 123456
