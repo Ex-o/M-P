@@ -85,7 +85,7 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.successful_payment.
+    # await update.message.successful_payment.
     return ConversationHandler.END
 
 
