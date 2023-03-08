@@ -44,7 +44,7 @@ import os
 import logging
 
 from telegram.ext import Application, CommandHandler, ContextTypes, ConversationHandler, CallbackContext, ExtBot, \
-    TypeHandler
+    TypeHandler, PreCheckoutQueryHandler
 
 from src.modules.start import start_handler
 from src.modules.help import help_handler
@@ -135,7 +135,7 @@ async def main() -> None:
     )
     application.add_handler(conv_handler)
     application.add_handler(TypeHandler(type=WebhookUpdate, callback=webhook_update))
-    application.add_handler(TypeHandler(type=PreCheckoutQuery, callback=pre_checkout_handler))
+    application.add_handler(PreCheckoutQueryHandler(callback=pre_checkout_handler))
 
     # Pass webhook settings to telegram
     await application.bot.set_webhook(url=f"{url}/telegram")
