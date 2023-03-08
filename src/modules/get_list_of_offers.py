@@ -36,7 +36,7 @@ async def get_list_of_own_offers_handler(update: Update, context: ContextTypes.D
 async def get_list_of_others_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
 
-    filters = get_filters(user.id)
+    filters = await get_filters(user.id)
     offers = get_offers_by_status('paid', user.id)
 
     offers = filter_offers(offers, filters)
