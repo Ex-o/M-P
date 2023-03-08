@@ -41,6 +41,6 @@ def _min_dist(offer, filters):
 
 
 def filter_offers(offers, filters):
-    if not filters:
+    if not filters or len(filters) == 0:
         return offers
     return [offer for offer in offers if _min_dist(offer, filters) < 0.1]
