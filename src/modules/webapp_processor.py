@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse
-from telegram.ext import CallbackContext, ExtBot
+from telegram.ext import CallbackContext, ExtBot, ConversationHandler
 
 from src.db.utils import set_offer_details
 
@@ -34,8 +34,10 @@ class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
         return super().from_update(update, application)
 
 
-async def webhook_update(update: WebhookUpdate, context: CustomContext) -> None:
+async def webhook_update(update: WebhookUpdate, context: CustomContext):
     offers = [x for x in update.offer_details.items() if x[1] > 0]
     set_offer_details(update.offer_id, json.dumps(offers))
 
     await context.bot.send_message(update.user_id, "THANKS FOR MAKING ORDER NIGGA")
+
+    return ConversationHandler.END
