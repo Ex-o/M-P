@@ -84,7 +84,7 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
-        'Thanks for ' + update.message.invoice.title + ' payment braza'
+        'Thanks for ' + update.message.text + ' payment braza'
     )
 
     return ConversationHandler.END
