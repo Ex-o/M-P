@@ -128,6 +128,7 @@ async def main() -> None:
                                                          offer_id=offer["id"],
                                                          food_hash=offer_json["orderId"],
                                                          offer_details=offer_json["selections"]))
+        return PlainTextResponse("Thank you!")
 
     async def health(_: Request) -> PlainTextResponse:
         """For the health endpoint, reply with a simple plain text message."""
