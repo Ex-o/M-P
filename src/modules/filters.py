@@ -2,7 +2,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
 from ..data.pages import *
-from ..utils.maps import get_ll_from_yandex_url
+from ..utils.maps import get_point
 from ..db.utils import add_filter
 
 
@@ -27,17 +27,17 @@ async def add_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
     await query.answer()
 
     await query.edit_message_text(
-        'Alright, please share the link for the location you want to add (for example: https://yandex.ru/maps/-/CCUGNOeiXA)'
+        'Alright, please write the address where you want to add'
     )
     return FILTERS_ADD_PAGE
 
 
 async def accept_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    link = update.message.text
+    address = update.message.text
     user_id = update.effective_user.id
-    lon, lat = await get_ll_from_yandex_url(link)
+    point = await get_point(address)
 
-    add_filter(user_id, lat, lon, link)
+    add_filter(user_id, point['lat'], point['lon'], point['formatted_address'])
 
     keyboard = [
         [InlineKeyboardButton("Add new location", callback_data=str(1))],

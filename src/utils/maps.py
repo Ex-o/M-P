@@ -1,19 +1,19 @@
-from bs4 import BeautifulSoup
-import json
-
-import asyncio
-from playwright.async_api import async_playwright
+import os
+import googlemaps
 
 
-async def get_ll_from_yandex_url(url):
-    p = await async_playwright().start()
-    for browser_type in [p.chromium]:
-        browser = await browser_type.launch()
-        page = await browser.new_page()
-        await page.goto(url)
-        src = await page.content()
-        print(src)
-        bs = BeautifulSoup(src, features="html.parser")
-        test = bs.find("script", {"class": "state-view"}).next
-        js = json.loads(test)
-        return js['map']['location']['center']
+API_KEY = os.environ['GOOGLE_GEOCODE_APIKEY']
+G_MAPS = googlemaps.Client(key=API_KEY)
+
+
+async def get_point(address):
+    result = G_MAPS.geocode(address)
+
+    if len(result) == 0:
+        return None
+
+    return {
+        'formatted_address': result[0]['formatted_address'],
+        'lat': result[0]['geometry']['location']['lat'],
+        'lon': result[0]['geometry']['location']['lng']
+    }
