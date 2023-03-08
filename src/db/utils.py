@@ -116,3 +116,20 @@ def add_filter(user_id, lat, lon, link, info=""):
             'INSERT INTO filters (user_id, lat, lon, link, info) '
             f'VALUES (\'{user_id}\', \'{lat}\', \'{lon}\', \'{link}\', \'{info}\');'
         )
+
+
+def get_filters(user_id):
+    with db() as db_ctx:
+        db_ctx.execute(
+            'SELECT id, user_id, lat, lon, link, info FROM filters WHERE '
+            f'user_id=\'{user_id}\''
+        )
+        return db_ctx.fetchall()
+
+
+def delete_filter(filter_id):
+    with db() as db_ctx:
+        db_ctx.execute(
+            'DELETE FROM filters WHERE '
+            f'filter_id=\'{filter_id}\''
+        )

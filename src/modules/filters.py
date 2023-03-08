@@ -2,8 +2,8 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
 from ..data.pages import *
-from ..utils.maps import get_ll_from_yandex_url
-from ..db.utils import add_filter
+from ..utils.maps import get_point
+from ..db.utils import add_filter, get_filters, delete_filter
 
 
 async def filters_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -27,17 +27,17 @@ async def add_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
     await query.answer()
 
     await query.edit_message_text(
-        'Alright, please share the link for the location you want to add (for example: https://yandex.ru/maps/-/CCUGNOeiXA)'
+        'Alright, please write the address where you want to add'
     )
     return FILTERS_ADD_PAGE
 
 
 async def accept_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    link = update.message.text
+    address = update.message.text
     user_id = update.effective_user.id
-    lon, lat = await get_ll_from_yandex_url(link)
+    point = await get_point(address)
 
-    add_filter(user_id, lat, lon, link)
+    add_filter(user_id, point['lat'], point['lon'], point['formatted_address'])
 
     keyboard = [
         [InlineKeyboardButton("Add new location", callback_data=str(1))],
@@ -46,5 +46,40 @@ async def accept_filter_handler(update: Update, context: ContextTypes.DEFAULT_TY
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     await update.message.reply_text('Your filter was successfully added', reply_markup=reply_markup)
+
+    FILTERS_PAGE
+
+
+async def delete_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    query = update.callback_query
+    await query.answer()
+
+    user_id = update.effective_user.id
+    filters = get_filters(user_id)
+
+    keyboard = [[InlineKeyboardButton(filter['link'], callback_data=str(filter['id']))]
+                for filter in filters]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    await query.edit_message_text(
+        'Please select which filter you want to cancel!', reply_markup=reply_markup
+    )
+    return FILTERS_CANCEL_PAGE
+
+
+async def confirm_delete_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    query = update.callback_query
+    await query.answer()
+
+    delete_filter(query.data)
+
+    keyboard = [
+        [InlineKeyboardButton("Add new location", callback_data=str(1))],
+        [InlineKeyboardButton("Delete location", callback_data=str(2))],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    await update.message.reply_text('Your filter was successfully deleted', reply_markup=reply_markup)
 
     FILTERS_PAGE
