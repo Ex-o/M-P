@@ -28,7 +28,7 @@ from starlette.routing import Route
 from telegram import __version__ as TG_VER, Update, PreCheckoutQuery
 from telegram.constants import ParseMode
 
-from src.db.utils import get_order_by_hash, set_order_details
+from src.db.utils import get_order_by_hash
 from src.modules.webapp_processor import WebhookUpdate, CustomContext, webhook_update
 
 try:
