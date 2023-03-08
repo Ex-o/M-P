@@ -100,12 +100,6 @@ async def webhook_update(update: WebhookUpdate, context: CustomContext) -> None:
     )
 
 
-async def test_payment(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.sender_chat.send_message(
-        text="THANKS FOR PAYING MAZA FAKA"
-    )
-
-
 async def main() -> None:
     """Set up the application and a custom webserver."""
     url = "https://boiling-ravine-21139.herokuapp.com"
@@ -123,7 +117,6 @@ async def main() -> None:
     application.bot_data["admin_chat_id"] = admin_chat_id
 
     # register handlers
-    application.add_handler(MessageHandler(filters.SUCCESSFUL_PAYMENT), test_payment)
     application.add_handler(CommandHandler("help", help_handler))
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start_handler)],

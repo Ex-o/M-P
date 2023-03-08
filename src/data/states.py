@@ -4,7 +4,7 @@ from ..modules.active_offers import active_offers_handler
 from ..modules.cancel_offer import cancel_offer_handler, cancel_confirm_handler, destroy_offer_handler
 from ..modules.courier import courier_handler
 from ..modules.create_offer import meeting_place_handler, food_place_handler, \
-    payment_handler, create_offer_handler, create_food_offer_handler, create_other_offer_handler
+    payment_handler, create_offer_handler, create_food_offer_handler, create_other_offer_handler, accept_payment_handler
 from ..modules.end import end_handler
 from ..data.pages import *
 from ..modules.get_list_of_offers import get_list_of_others_offers_handler, ready_to_complete_handler, \
@@ -56,6 +56,11 @@ CREATE_OFFER_STATE = {
     PAYMENT_PAGE: [
         MessageHandler(
             filters.TEXT & ~filters.COMMAND, payment_handler
+        )
+    ],
+    PAYMENT_PAGE_2: [
+        MessageHandler(
+            filters.SUCCESSFUL_PAYMENT & ~filters.COMMAND, accept_payment_handler
         )
     ]
 }

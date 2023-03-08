@@ -1,10 +1,14 @@
+import os
 import uuid
 
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, LabeledPrice
 from telegram.ext import ContextTypes, ConversationHandler
 from ..db.utils import set_offer
 
 from ..data.pages import *
+
+
+PROVIDER_TEST_TOKEN = os.environ['PROVIDER_TEST_TOKEN']
 
 
 async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -68,9 +72,18 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     update.message.sender_chat.send_invoice()
     set_offer(loc_destination, loc_source, cost, user_id)
 
+    await update.message.sender_chat.send_invoice(provider_token=PROVIDER_TEST_TOKEN,
+                                                  title="PAY THIS TEST title",
+                                                  description="some description mafaka",
+                                                  currency="RUB",
+                                                  payload="ok, some payload",
+                                                  prices=[LabeledPrice(label="lable 1", amount=300),
+                                                          LabeledPrice(label="lable 2", amount=200)])
+
+    return PAYMENT_PAGE_2
+
+
+async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
-        'Thank you for your offer, your offer is successfully added'
+        'Thanks for ' + update.message.invoice.title + ' payment braza'
     )
-
-    return ConversationHandler.END
-
