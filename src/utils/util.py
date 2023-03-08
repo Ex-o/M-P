@@ -25,7 +25,7 @@ def to_offer(filters):
     res = ""
     for filter in filters:
         res += 'Offer:\n' \
-               f"Details: {filter['id']}\n" \
+               f"Details: {str(filter['id'])}\n" \
                f"Needs to be delivered to: {filter['loc_destination']}\n" \
                f"Pays: {filter['cost']}\n\n"
 
