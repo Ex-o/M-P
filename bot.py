@@ -118,15 +118,16 @@ async def main() -> None:
         return Response()
 
     async def custom_updates(request: Request) -> PlainTextResponse:
-        order_json = await request.json()
-        order = get_order_by_hash(order_json["orderId"])
+        offer_json = await request.json()
+        offer = get_order_by_hash(offer_json["orderId"])
 
-        if len(order) == 0:
+        if len(offer) == 0:
             return PlainTextResponse("Incorrect hash!")
 
-        await application.update_queue.put(WebhookUpdate(user_id=order["user_id"],
-                                                         order_id=order_json["orderId"],
-                                                         order_details=order_json["selections"]))
+        await application.update_queue.put(WebhookUpdate(user_id=offer["user_id"],
+                                                         offer_id=offer["id"],
+                                                         food_hash=offer_json["orderId"],
+                                                         order_details=offer_json["selections"]))
 
     async def health(_: Request) -> PlainTextResponse:
         """For the health endpoint, reply with a simple plain text message."""

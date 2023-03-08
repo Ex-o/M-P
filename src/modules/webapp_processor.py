@@ -5,15 +5,16 @@ from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 from telegram.ext import CallbackContext, ExtBot
 
-from src.db.utils import get_order_by_hash, set_order_details
+from src.db.utils import get_order_by_hash, set_offer_details
 
 @dataclass
 class WebhookUpdate:
     """Simple dataclass to wrap a custom update type"""
 
     user_id: int
-    order_id: str
-    order_details: str
+    offer_id: int
+    food_hash: str
+    offer_details: str
 
 
 class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
@@ -34,7 +35,7 @@ class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
 
 
 async def webhook_update(update: WebhookUpdate, context: CustomContext) -> None:
-    orders = [x for x in update.order_details.items() if x[1] > 0]
-    set_order_details(update.order_id, json.dumps(orders))
+    offers = [x for x in update.offer_details.items() if x[1] > 0]
+    set_offer_details(update.offer_id, json.dumps(offers))
 
     await context.bot.send_message(update.user_id, "THANKS FOR MAKING ORDER NIGGA")
