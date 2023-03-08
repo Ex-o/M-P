@@ -131,5 +131,5 @@ def delete_filter(filter_id):
     with db() as db_ctx:
         db_ctx.execute(
             'DELETE FROM filters WHERE '
-            f'filter_id=\'{filter_id}\''
+            f'id=\'{filter_id}\''
         )
