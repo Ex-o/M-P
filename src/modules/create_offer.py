@@ -84,11 +84,12 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.forward(update.message.chat_id)
+    await update.message.reply_text(update.message.text)
     return ConversationHandler.END
 
 
 async def pre_checkout_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    update.pre_checkout_query
     pre_checkout_query_id = update.pre_checkout_query.id
     await context.bot.answerPreCheckoutQuery(pre_checkout_query_id=pre_checkout_query_id, ok=True)
 
