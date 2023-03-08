@@ -65,7 +65,7 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     loc_source = context.user_data['loc_source']
     cost = update.message.text
     user_id = update.effective_user.id
-
+    update.message.sender_chat.send_invoice()
     set_offer(loc_destination, loc_source, cost, user_id)
 
     await update.message.reply_text(
