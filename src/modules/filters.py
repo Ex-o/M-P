@@ -80,6 +80,6 @@ async def confirm_delete_filter_handler(update: Update, context: ContextTypes.DE
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    await update.message.reply_text('Your filter was successfully deleted', reply_markup=reply_markup)
+    await query.edit_message_text('Your filter was successfully deleted', reply_markup=reply_markup)
 
-    FILTERS_PAGE
+    return FILTERS_PAGE
