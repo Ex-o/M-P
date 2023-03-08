@@ -63,12 +63,9 @@ CREATE_OFFER_STATE = {
 
 GET_LIST_OF_OFFERS_STATE = {
     GET_LIST_OF_OFFERS_PAGE: [
-        CallbackQueryHandler(ready_to_complete_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^" + str(2) + "$"),
-        CallbackQueryHandler(end_handler, pattern="^" + str(3) + "$"),
-        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^" + str(4) + "$"),
-        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^accept_more$"),
-        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^end$"),
+        CallbackQueryHandler(ready_to_complete_handler, pattern="^(0|[1-9][0-9]*)$"),
+        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^(accept_more|go_back)$"),
+        CallbackQueryHandler(end_handler(), pattern="^end$"),
     ],
 }
 
