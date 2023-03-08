@@ -24,7 +24,7 @@ from starlette.requests import Request
 from starlette.responses import PlainTextResponse, Response
 from starlette.routing import Route
 
-from telegram import __version__ as TG_VER, Update
+from telegram import __version__ as TG_VER, Update, PreCheckoutQuery
 from telegram.constants import ParseMode
 
 try:
@@ -134,6 +134,7 @@ async def main() -> None:
     )
     application.add_handler(conv_handler)
     application.add_handler(TypeHandler(type=WebhookUpdate, callback=webhook_update))
+    application.add_handler(TypeHandler(type=PreCheckoutQuery, callback=pre_checkout_handler))
 
     # Pass webhook settings to telegram
     await application.bot.set_webhook(url=f"{url}/telegram")

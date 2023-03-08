@@ -83,9 +83,11 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    pre_checkout_query_id = update.pre_checkout_query.id
-    await context.bot.answerPreCheckoutQuery(pre_checkout_query_id=pre_checkout_query_id, ok=True)
-
     await update.message.reply_text(
         'Thanks for ' + update.message.invoice.title + ' payment braza'
     )
+
+
+async def pre_checkout_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    pre_checkout_query_id = update.pre_checkout_query.id
+    await context.bot.answerPreCheckoutQuery(pre_checkout_query_id=pre_checkout_query_id, ok=True)
