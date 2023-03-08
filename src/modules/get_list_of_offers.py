@@ -38,6 +38,7 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
 
     filters = get_filters(user.id)
     offers = get_offers_by_status('paid', user.id)
+
     offers = filter_offers(offers, filters)
 
     query = update.callback_query
