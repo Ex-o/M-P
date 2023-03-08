@@ -78,13 +78,14 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
                                                   payload="ok, some payload",
                                                   prices=[LabeledPrice(label="lable 1", amount=300 * 100),
                                                           LabeledPrice(label="lable 2", amount=200 * 100)],
-                                       need_shipping_address=True)
+                                       need_shipping_address=True,
+                                       start_parameter='wtf!')
 
     return ConversationHandler.END
 
 
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.reply_text(update.message.text)
+    # await update.message.invoice.
     return ConversationHandler.END
 
 
