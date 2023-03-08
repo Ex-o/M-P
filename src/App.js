@@ -28,7 +28,7 @@ function App() {
   const submitHandler = (e) => {
     e.preventDefault();
     const searchParams = new URLSearchParams(document.location.search);
-    const hash = searchParams.get("hash");
+    const orderId = searchParams.get("orderId");
     console.log(selections);
     fetch(process.env.REACT_APP_API_URL, {
       method: "POST",
@@ -36,7 +36,7 @@ function App() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        hash,
+        orderId,
         selections
       })
     });
@@ -48,7 +48,7 @@ function App() {
         <Form onSubmit={submitHandler}>
           <Row>
             {Object.entries(Items).map(
-              ([key, { display, description, img }]) => (
+              ([key, {title, price, currency, img }]) => (
                 <Col xs={6} md={4} lg={3} className="mt-4">
                   <Card
                     className={
@@ -59,8 +59,8 @@ function App() {
                   >
                     <Card.Img variant="top" src={img ? img : blank} />
                     <Card.Body>
-                      <Card.Title>{display}</Card.Title>
-                      <Card.Text>{description}</Card.Text>
+                      <Card.Title>{title}</Card.Title>
+                      <Card.Text>{price}{currency}</Card.Text>
                       <InputGroup className="mb-3">
                         <Button
                           className="btn-danger"

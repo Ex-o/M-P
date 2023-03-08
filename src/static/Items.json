@@ -1,15 +1,18 @@
 {
-  "BigMac": { "display": "Big Mac", "description": "LoremLoremLoremLoremLoremLorem", "img": "" },
-  "BBCere": { "display": "Big Black Combo", "description": "Lorem" },
-  "BBrewrC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BBwerC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BwerBC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BewrBC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BrewweBC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BweBC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BrerwBC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BrweBC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BBrC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BrewBC": { "display": "Big Black Combo", "description": "Lorem" },
-  "BBrewC": { "display": "Big Black Combo", "description": "Lorem" }
+  "LOL1": {
+    "title": "Бейсболка",
+    "price": "499.99",
+    "currency": "₽",
+    "img": ""
+  },
+  "LOL": {
+    "title": "КрСэнд Гриль я/с/б",
+    "price": "125.99",
+    "currency": "₽"
+  },
+  "WTF": {
+    "title": "Пиво Балтика безалкогольное банка",
+    "price": "99.99",
+    "currency": "₽"
+  }
 }
