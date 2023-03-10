@@ -25,7 +25,7 @@ def delete_offer(offer_id):
             f'DELETE FROM offers where id = \'{offer_id}\';'
         )
         db_ctx.execute(
-            f'DELETE FROM matched_offers WHERE WHERE offer_id = \'{offer_id}\';'
+            f'DELETE FROM matched_offers WHERE offer_id = \'{offer_id}\';'
         )
 
 
