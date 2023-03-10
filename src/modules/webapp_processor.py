@@ -11,6 +11,7 @@ from src.db.utils import set_offer_details, get_menu_items
 
 PROVIDER_TEST_TOKEN = os.environ['PROVIDER_TEST_TOKEN']
 
+
 @dataclass
 class WebhookUpdate:
     """Simple dataclass to wrap a custom update type"""
@@ -29,9 +30,9 @@ class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
 
     @classmethod
     def from_update(
-        cls,
-        update: object,
-        application: "Application",
+            cls,
+            update: object,
+            application: "Application",
     ) -> "CustomContext":
         if isinstance(update, WebhookUpdate):
             return cls(application=application, user_id=update.user_id)
@@ -41,16 +42,22 @@ class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
 async def webhook_update(update: WebhookUpdate, context: CustomContext):
     offers = [x for x in update.offer_details.items() if x[1] > 0]
     set_offer_details(update.offer_id, json.dumps(offers))
-    menu = get_menu_items([x[0] for x in update.offer_details.items()])
+    menu = get_menu_items([x[0] for x in offers])
+
+    quantified_menu = []
+    for x in menu:
+        tmp = next(y for y in offers if y["id"] == x[0])
+        quantified_menu.append([x["title"], x["price"], tmp[1]])
 
     await context.bot.send_invoice(update.user_id, provider_token=PROVIDER_TEST_TOKEN,
-                                                  title="PAY THIS TEST title",
-                                                  description="some description mafaka",
-                                                  currency="RUB",
-                                                  payload="ok, some payload",
-                                                  prices=[LabeledPrice(label=x["title"], amount=x["price"] * 100)
-                                                          for x in menu],
-                                       need_shipping_address=True,
-                                       start_parameter='wtf')
+                                   title=f"Your order: {update.food_hash}",
+                                   description="Please complete the payment to proceed",
+                                   currency="RUB",
+                                   payload=str(update.offer_id),
+                                   prices=[LabeledPrice(label=f"x{x[2]} {x[0]}",
+                                                        amount=x[1] * x[2] * 100)
+                                           for x in quantified_menu],
+                                   need_shipping_address=False,
+                                   start_parameter='wtf')
 
     return ConversationHandler.END

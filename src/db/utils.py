@@ -104,7 +104,7 @@ def get_menu_items(id_list):
         values = ','.join(["'{0}'".format(x) for x in id_list])
 
         db_ctx.execute(
-            f'SELECT shop, title, price, currency FROM menu WHERE id IN ({values});'
+            f'SELECT id, shop, title, price, currency FROM menu WHERE id IN ({values});'
         )
         return db_ctx.fetchall()
 
