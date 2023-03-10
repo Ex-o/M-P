@@ -46,7 +46,7 @@ async def webhook_update(update: WebhookUpdate, context: CustomContext):
 
     quantified_menu = []
     for x in menu:
-        tmp = next(y for y in offers if y["id"] == x[0])
+        tmp = next(y for y in offers if y[0] == x[0])
         quantified_menu.append([x["title"], x["price"], tmp[1]])
 
     await context.bot.send_invoice(update.user_id, provider_token=PROVIDER_TEST_TOKEN,
