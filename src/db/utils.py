@@ -83,6 +83,13 @@ def get_offers_by_status(status, user_id):
         return db_ctx.fetchall()
 
 
+def delete_other_matches(offer_id, user_id):
+    with db() as db_ctx:
+        db_ctx.execute(
+            f'DELETE FROM matched_offers WHERE offer_id = \'{offer_id}\' AND user_id != \'{user_id}\';'
+        )
+
+
 def get_needs_approval_list(user_id):
     with db() as db_ctx:
         db_ctx.execute(
