@@ -56,12 +56,10 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
     for idx, offer in enumerate(approvals, start=1):
         reply += f'{idx}. {to_approval(offer)}'
 
-    keyboard = [[InlineKeyboardButton(f"Approve {x}",
-                                      callback_data=str(approvals[x]['offer_id'] + '#' + approvals[x]['user_id']))]
+    keyboard = [[InlineKeyboardButton(f"Approve {x}", callback_data=str(
+        str(approvals[x]['offer_id']) + '#' + str(approvals[x]['user_id'])))]
                 for x in range(len(approvals))]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-
     await query.edit_message_text(reply, reply_markup=reply_markup)
-
     return GET_APPROVALS_PAGE
