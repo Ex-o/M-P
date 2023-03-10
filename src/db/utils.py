@@ -88,6 +88,9 @@ def delete_other_matches(offer_id, user_id):
         db_ctx.execute(
             f'DELETE FROM matched_offers WHERE offer_id = \'{offer_id}\' AND user_id != \'{user_id}\';'
         )
+        db_ctx.execute(
+            f'UPDATE offers SET status = "approved" WHERE id = \'{offer_id}\';'
+        )
 
 
 def get_needs_approval_list(user_id):
