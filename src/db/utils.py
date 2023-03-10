@@ -22,7 +22,7 @@ def get_user(user_id):
 def delete_offer(offer_id):
     with db() as db_ctx:
         db_ctx.execute(
-            f'DELETE FROM offers where id = \'{id}\';'
+            f'DELETE FROM offers where id = \'{offer_id}\';'
         )
         db_ctx.execute(
             f'DELETE FROM matched_offers WHERE WHERE offer_id = \'{offer_id}\';'
