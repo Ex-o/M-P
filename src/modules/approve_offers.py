@@ -56,7 +56,7 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
     for idx, offer in enumerate(approvals, start=1):
         reply += f'{idx}. {to_approval(offer)}'
 
-    keyboard = [[InlineKeyboardButton(f"Approve {x}", callback_data=str(
+    keyboard = [[InlineKeyboardButton(f"Approve {x + 1}", callback_data=str(
         str(approvals[x]['offer_id']) + '#' + str(approvals[x]['user_id'])))]
                 for x in range(len(approvals))]
 
