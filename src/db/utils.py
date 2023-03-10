@@ -49,7 +49,7 @@ def set_offer(loc_destination, loc_source, cost, user_id):
 
 def set_offer_status(offer_id, new_status):
     with db() as db_ctx:
-        db_ctx.ececute(
+        db_ctx.execute(
             f'UPDATE offers SET status = \'{new_status}\' WHERE id = \'{offer_id}\';'
         )
 
