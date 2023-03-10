@@ -7,7 +7,6 @@ from ..db.utils import set_offer, add_pending_food_offer, set_offer_status
 
 from ..data.pages import *
 
-
 PROVIDER_TEST_TOKEN = os.environ['PROVIDER_TEST_TOKEN']
 
 
@@ -75,12 +74,12 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     set_offer(loc_destination, loc_source, cost, user_id)
 
     await update.message.reply_invoice(provider_token=PROVIDER_TEST_TOKEN,
-                                                  title="PAY THIS TEST title",
-                                                  description="some description mafaka",
-                                                  currency="RUB",
-                                                  payload="ok, some payload",
-                                                  prices=[LabeledPrice(label="lable 1", amount=300 * 100),
-                                                          LabeledPrice(label="lable 2", amount=200 * 100)],
+                                       title="PAY THIS TEST title",
+                                       description="some description mafaka",
+                                       currency="RUB",
+                                       payload="ok, some payload",
+                                       prices=[LabeledPrice(label="lable 1", amount=300 * 100),
+                                               LabeledPrice(label="lable 2", amount=200 * 100)],
                                        need_shipping_address=True,
                                        start_parameter='wtf')
 
@@ -90,13 +89,12 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     offer_id = update.message.successful_payment.invoice_payload
     set_offer_status(offer_id, 'paid')
-    await update.message.sender_chat.send_message("Payment Successful! We'll be showing your order to potential "
-                                                  "couriers now :)")
+    await context.bot.send_message(update.effective_user.id,
+                                   "Payment Successful! We'll be showing your order to potential couriers now :)")
     return ConversationHandler.END
 
 
 async def pre_checkout_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    update.pre_checkout_query
     pre_checkout_query_id = update.pre_checkout_query.id
     await context.bot.answerPreCheckoutQuery(pre_checkout_query_id=pre_checkout_query_id, ok=True)
 
