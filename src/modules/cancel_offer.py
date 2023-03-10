@@ -2,14 +2,15 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
 from ..data.pages import *
 
-from ..db.utils import get_active_sender_offers
+from ..db.utils import get_active_sender_offers, delete_offer
 
 
 async def destroy_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
     await query.answer()
 
-    # TODO: Remove offer from db + checking if can be deleted
+    delete_offer(context.user_data['offer_to_be_cancelled'])
+
     await query.edit_message_text(
         f"Your offer [{context.user_data['offer_to_be_cancelled']}] is now deleted!"
     )
