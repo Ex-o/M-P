@@ -10,11 +10,11 @@ async def approve_offer_handler(update: Update, context: ContextTypes.DEFAULT_TY
     query = update.callback_query
     await query.answer()
 
-    offer_id, user_id = query.data.split('#')
+    offer_id, user_id = context.user_data['offer_to_be_approved'].split('#')
 
     delete_other_matches(offer_id, user_id)
     await query.edit_message_text(
-        f"Your offer [{context.user_data['offer_to_be_approved']}] is now approved!"
+        f"Your offer [{offer_id}] is now approved!"
     )
 
     return ConversationHandler.END
