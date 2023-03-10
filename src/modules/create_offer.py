@@ -3,7 +3,7 @@ import uuid
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, LabeledPrice
 from telegram.ext import ContextTypes, ConversationHandler
-from ..db.utils import set_offer, add_pending_food_offer
+from ..db.utils import set_offer, add_pending_food_offer, set_offer_status
 
 from ..data.pages import *
 
@@ -88,7 +88,10 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    # await update.message.successful_payment.
+    offer_id = update.message.successful_payment.invoice_payload
+    set_offer_status(offer_id, 'paid')
+    await update.message.sender_chat.send_message("Payment Successful! We'll be showing your order to potential "
+                                                  "couriers now :)")
     return ConversationHandler.END
 
 
