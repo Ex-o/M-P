@@ -51,7 +51,7 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
         return GET_LIST_OF_OFFERS_PAGE
 
     page = context.user_data['page']
-    left = min(len(query) - 5, page * 5)
+    left = min(len(offers) - 5, page * 5)
     left = max(left, 0)
     offers = offers[left:min(len(offers), left+5)]
 
