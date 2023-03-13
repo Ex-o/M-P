@@ -15,6 +15,5 @@ async def change_by_delta_trust_score(user_id, customer_type, delta):
 
 async def get_trust_score(user_id, customer_type):
     async with await db() as db_ctx:
-        db_ctx.execute(
+        return await db_ctx.fetchrow(
             f'SELECT {customer_type} FROM users WHERE id=\'{user_id}\';')
-        return db_ctx.fetchone()
