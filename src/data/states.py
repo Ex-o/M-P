@@ -7,8 +7,8 @@ from ..modules.create_offer import meeting_place_handler, food_place_handler, \
     payment_handler, create_offer_handler, create_food_offer_handler, create_other_offer_handler, accept_payment_handler
 from ..modules.end import end_handler
 from ..data.pages import *
-from ..modules.get_list_of_offers import get_list_of_others_offers_handler, ready_to_complete_handler, \
-    get_list_of_own_offers_handler
+from ..modules.get_list_of_offers import get_list_of_own_offers_handler
+from ..modules.courier.get_list_of_offers import get_list_of_others_offers_handler, ready_to_complete_handler
 from ..modules.sender import sender_handler
 from ..modules.approve_offers import get_approvals_handler, confirm_approval_handler, approve_offer_handler
 from ..modules.filters import filters_handler, add_filter_handler, accept_filter_handler, delete_filter_handler, \
