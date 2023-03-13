@@ -38,7 +38,6 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
 
     filters = await get_filters(user.id)
     offers = get_offers_by_status('paid', user.id)
-
     offers = filter_offers(offers, filters)
 
     query = update.callback_query
@@ -51,16 +50,21 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
         )
         return GET_LIST_OF_OFFERS_PAGE
 
+    page = context.user_data['page']
+    left = min(len(query) - 5, page * 5)
+    left = max(left, 0)
+    offers = offers[left:min(len(offers), left+5)]
+
     reply = ""
-    context.user_data['pending_offers'] = {}
 
     for idx, offer in enumerate(offers, start=1):
         reply += f'{idx}. {to_offer([offer])}'
-        context.user_data['pending_offers'][idx] = offer['id']
 
-    keyboard = [[InlineKeyboardButton(f"Accept {to_offer([offers[x-1]])}",
-                                      callback_data=str(context.user_data['pending_offers'][x]))]
+    keyboard = [[InlineKeyboardButton(f"Accept {x}",
+                                      callback_data=str(offers[x-1]['id']))]
                 for x in range(1, len(offers) + 1)]
+    keyboard.append([InlineKeyboardButton('Previous page', callback_data='##Previous page##'),
+                     InlineKeyboardButton('Next page', callback_data='##Next page##')])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
