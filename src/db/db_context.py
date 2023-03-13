@@ -16,7 +16,7 @@ class DBConn:
     def __init__(self):
         self.connection = None
 
-    def __enter__(self):
+    async def __aenter__(self):
         return self.connection
 
     async def __aexit__(self, exc_type, exc_value, traceback):

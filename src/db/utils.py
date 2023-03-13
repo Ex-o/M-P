@@ -5,7 +5,7 @@ from .db_context import create_db as db
 
 
 async def register_user(telegram_id, full_name, chat_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'INSERT INTO users (id, full_name, chat_id) '
             f'VALUES(\'{telegram_id}\', \'{full_name}\', \'{chat_id}\') '
@@ -13,14 +13,14 @@ async def register_user(telegram_id, full_name, chat_id):
 
 
 async def get_user(user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f'SELECT id, full_name, last_offer FROM users WHERE id = \'{user_id}\';')
         return await db_ctx.fetchrow()
 
 
 async def delete_offer(offer_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f'DELETE FROM offers where id = \'{offer_id}\';'
         )
@@ -30,42 +30,42 @@ async def delete_offer(offer_id):
 
 
 async def set_offer_details(id, json):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f'UPDATE offers SET details = \'{json}\' WHERE id = \'{id}\';'
         )
 
 
 async def get_order_by_hash(food_hash):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f'SELECT id, user_id FROM offers WHERE food_hash = \'{food_hash}\';')
         return await db_ctx.fetchrow()
 
 
 async def add_pending_food_offer(user_id, food_hash, loc_destination, loc_source):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'INSERT INTO offers (loc_destination, loc_source, food_hash, user_id) '
             f'VALUES (\'{loc_destination}\', \'{loc_source}\', \'{food_hash}\', \'{user_id}\');')
 
 
 async def set_offer(loc_destination, loc_source, cost, user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'INSERT INTO offers (loc_destination, loc_source, cost, user_id) '
             f'VALUES (\'{loc_destination}\', \'{loc_source}\', \'{cost}\', \'{user_id}\');')
 
 
 async def set_offer_status(offer_id, new_status):
-    with await db() as db_ctx:
+    async async with await db() as db_ctx:
         await db_ctx.execute(
             f'UPDATE offers SET status = \'{new_status}\' WHERE id = \'{offer_id}\';'
         )
 
 
 async def get_own_offers(user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f"SELECT * FROM offers WHERE user_id = '{user_id}' AND status != 'completed';"
         )
@@ -73,7 +73,7 @@ async def get_own_offers(user_id):
 
 
 async def get_offers_by_status(status, user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f"SELECT offers.loc_destination, offers.loc_source, offers.cost, offers.id FROM offers "
             f"LEFT JOIN matched_offers ON offer_id = offers.id WHERE status = \'{status}\' "
@@ -84,7 +84,7 @@ async def get_offers_by_status(status, user_id):
 
 
 async def delete_other_matches(offer_id, user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f'DELETE FROM matched_offers WHERE offer_id = \'{offer_id}\' AND user_id != \'{user_id}\';'
         )
@@ -94,7 +94,7 @@ async def delete_other_matches(offer_id, user_id):
 
 
 async def get_needs_approval_list(user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f'SELECT * '
             f'FROM matched_offers '
@@ -106,7 +106,7 @@ async def get_needs_approval_list(user_id):
 
 
 async def get_active_sender_offers(user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'SELECT loc_destination, loc_source, id '
             'FROM offers '
@@ -118,7 +118,7 @@ async def get_active_sender_offers(user_id):
 
 # TODO: better name pls
 async def get_offers(user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'SELECT offers.loc_destination, offers.loc_source, offers.cost, offers.id FROM offers JOIN matched_offers '
             'ON offers.id = matched_offers.offer_id '
@@ -127,7 +127,7 @@ async def get_offers(user_id):
 
 
 async def get_menu_items(id_list):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         values = ','.join(["'{0}'".format(x) for x in id_list])
 
         await db_ctx.execute(
@@ -137,14 +137,14 @@ async def get_menu_items(id_list):
 
 
 async def update_last_offer_of_user(user_id, last_offer_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f'UPDATE users SET last_offer = \'{last_offer_id}\' WHERE id = \'{user_id}\';'
         )
 
 
 async def set_offer_match(user_id, offer_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'INSERT INTO matched_offers (user_id, offer_id) '
             f'VALUES (\'{user_id}\', \'{offer_id}\');'
@@ -152,7 +152,7 @@ async def set_offer_match(user_id, offer_id):
 
 
 async def add_filter(user_id, lat, lon, link, info=""):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'INSERT INTO filters (user_id, lat, lon, link, info) '
             f'VALUES (\'{user_id}\', \'{lat}\', \'{lon}\', \'{link}\', \'{info}\');'
@@ -160,7 +160,7 @@ async def add_filter(user_id, lat, lon, link, info=""):
 
 
 async def get_filters(user_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'SELECT id, user_id, lat, lon, link, info FROM filters WHERE '
             f'user_id=\'{user_id}\''
@@ -169,7 +169,7 @@ async def get_filters(user_id):
 
 
 async def delete_filter(filter_id):
-    with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             'DELETE FROM filters WHERE '
             f'id=\'{filter_id}\''
