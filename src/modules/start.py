@@ -13,7 +13,7 @@ from ..db.utils import register_user
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
 
-    register_user(user.id, user.full_name, update.message.chat_id)
+    await register_user(user.id, user.full_name, update.message.chat_id)
 
     button_list = [
         InlineKeyboardButton("Courier", callback_data=str(1)),

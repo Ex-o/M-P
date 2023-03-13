@@ -9,7 +9,7 @@ async def destroy_offer_handler(update: Update, context: ContextTypes.DEFAULT_TY
     query = update.callback_query
     await query.answer()
 
-    delete_offer(context.user_data['offer_to_be_cancelled'])
+    await delete_offer(context.user_data['offer_to_be_cancelled'])
 
     await query.edit_message_text(
         f"Your offer [{context.user_data['offer_to_be_cancelled']}] is now deleted!"
@@ -41,7 +41,7 @@ async def cancel_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYP
     await query.answer()
 
     user_id = update.effective_user.id
-    active_offers = get_active_sender_offers(user_id)
+    active_offers = await get_active_sender_offers(user_id)
 
     if len(active_offers) == 0:
         await query.edit_message_text(

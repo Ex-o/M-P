@@ -33,7 +33,7 @@ async def create_food_offer_handler(update: Update, context: ContextTypes.DEFAUL
     await query.answer()
 
     uid = uuid.uuid1()
-    add_pending_food_offer(update.effective_user.id, uid, "BGK", context.user_data['loc_source'])
+    await add_pending_food_offer(update.effective_user.id, uid, "BGK", context.user_data['loc_source'])
 
     await query.edit_message_text(
         text=f"Go to https://hitchy-web.herokuapp.com/?orderId={uid} and submit your order!"
@@ -71,7 +71,7 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     loc_source = context.user_data['loc_source']
     cost = update.message.text
     user_id = update.effective_user.id
-    set_offer(loc_destination, loc_source, cost, user_id)
+    await set_offer(loc_destination, loc_source, cost, user_id)
 
     await update.message.reply_invoice(provider_token=PROVIDER_TEST_TOKEN,
                                        title="PAY THIS TEST title",
@@ -88,7 +88,7 @@ async def payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 async def accept_payment_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     offer_id = update.message.successful_payment.invoice_payload
-    set_offer_status(offer_id, 'paid')
+    await set_offer_status(offer_id, 'paid')
     await context.bot.send_message(update.effective_user.id,
                                    "Payment Successful! We'll be showing your order to potential couriers now :)")
     return ConversationHandler.END

@@ -41,8 +41,8 @@ class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
 
 async def webhook_update(update: WebhookUpdate, context: CustomContext):
     offers = [x for x in update.offer_details.items() if x[1] > 0]
-    set_offer_details(update.offer_id, json.dumps(offers))
-    menu = get_menu_items([x[0] for x in offers])
+    await set_offer_details(update.offer_id, json.dumps(offers))
+    menu = await get_menu_items([x[0] for x in offers])
 
     quantified_menu = []
     for x in menu:

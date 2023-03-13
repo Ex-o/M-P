@@ -119,7 +119,7 @@ async def main() -> None:
 
     async def custom_updates(request: Request) -> PlainTextResponse:
         offer_json = await request.json()
-        offer = get_order_by_hash(offer_json["orderId"])
+        offer = await get_order_by_hash(offer_json["orderId"])
 
         if len(offer) == 0:
             return PlainTextResponse("Incorrect hash!")

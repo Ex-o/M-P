@@ -5,3 +5,5 @@ geopy
 uvicorn
 starlette
 googlemaps
+psycopg
+asyncpg

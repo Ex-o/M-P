@@ -10,7 +10,7 @@ async def active_offers_handler(update: Update, context: ContextTypes.DEFAULT_TY
     """Show new choice of buttons"""
     user_id = update.effective_user.id
 
-    offers = get_offers(user_id)
+    offers = await get_offers(user_id)
 
     query = update.callback_query
     await query.answer()

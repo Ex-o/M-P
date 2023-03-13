@@ -37,7 +37,7 @@ async def accept_filter_handler(update: Update, context: ContextTypes.DEFAULT_TY
     user_id = update.effective_user.id
     point = await get_point(address)
 
-    add_filter(user_id, point['lat'], point['lon'], point['formatted_address'])
+    await add_filter(user_id, point['lat'], point['lon'], point['formatted_address'])
 
     keyboard = [
         [InlineKeyboardButton("Add new location", callback_data=str(1))],

@@ -12,7 +12,7 @@ async def approve_offer_handler(update: Update, context: ContextTypes.DEFAULT_TY
 
     offer_id, user_id = context.user_data['offer_to_be_approved'].split('#')
 
-    delete_other_matches(offer_id, user_id)
+    await delete_other_matches(offer_id, user_id)
     await query.edit_message_text(
         f"Your offer [{offer_id}] is now approved!"
     )
@@ -43,7 +43,7 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
     await query.answer()
 
     user_id = update.effective_user.id
-    approvals = get_needs_approval_list(user_id)
+    approvals = await get_needs_approval_list(user_id)
 
     if len(approvals) == 0:
         await query.edit_message_text(

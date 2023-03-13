@@ -14,7 +14,7 @@ async def get_list_of_own_offers_handler(update: Update, context: ContextTypes.D
     await query.answer()
 
     user_id = update.effective_user.id
-    offers = get_own_offers(user_id)
+    offers = await get_own_offers(user_id)
 
     if len(offers) == 0:
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Go back", callback_data=str(9999))]])
@@ -37,7 +37,7 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
     user = update.effective_user
 
     filters = await get_filters(user.id)
-    offers = get_offers_by_status('paid', user.id)
+    offers = await get_offers_by_status('paid', user.id)
 
     offers = filter_offers(offers, filters)
 
@@ -78,7 +78,7 @@ async def ready_to_complete_handler(update: Update, context: ContextTypes.DEFAUL
     user = update.effective_user
     user_id = user.id
     offer_id = query.data
-    set_offer_match(user_id, offer_id)
+    await set_offer_match(user_id, offer_id)
 
     keyboard = [
         [
