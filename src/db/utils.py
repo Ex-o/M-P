@@ -58,7 +58,7 @@ async def set_offer(loc_destination, loc_source, cost, user_id):
 
 
 async def set_offer_status(offer_id, new_status):
-    async async with await db() as db_ctx:
+    async with await db() as db_ctx:
         await db_ctx.execute(
             f'UPDATE offers SET status = \'{new_status}\' WHERE id = \'{offer_id}\';'
         )
