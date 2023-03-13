@@ -69,7 +69,7 @@ async def get_own_offers(user_id):
         await db_ctx.execute(
             f"SELECT * FROM offers WHERE user_id = '{user_id}' AND status != 'completed';"
         )
-        return await db_ctx.fetch()()
+        return await db_ctx.fetch()
 
 
 async def get_offers_by_status(status, user_id):
@@ -80,7 +80,7 @@ async def get_offers_by_status(status, user_id):
             f"AND (matched_offers.user_id != {user_id} OR matched_offers.user_id IS NULL) "
             f"AND offers.user_id != {user_id};")
 
-        return await db_ctx.fetch()()
+        return await db_ctx.fetch()
 
 
 async def delete_other_matches(offer_id, user_id):
@@ -102,7 +102,7 @@ async def get_needs_approval_list(user_id):
             f'JOIN users ON matched_offers.user_id = users.id '
             f'WHERE offers.user_id = \'{user_id}\' AND offers.status != \'approved\';'
         )
-        return await db_ctx.fetch()()
+        return await db_ctx.fetch()
 
 
 async def get_active_sender_offers(user_id):
@@ -113,7 +113,7 @@ async def get_active_sender_offers(user_id):
             'WHERE status != \'approved\' '
             f'AND offers.user_id = \'{user_id}\';'
         )
-        return await db_ctx.fetch()()
+        return await db_ctx.fetch()
 
 
 # TODO: better name pls
@@ -123,7 +123,7 @@ async def get_offers(user_id):
             'SELECT offers.loc_destination, offers.loc_source, offers.cost, offers.id FROM offers JOIN matched_offers '
             'ON offers.id = matched_offers.offer_id '
             f'WHERE matched_offers.user_id = \'{user_id}\';')
-        return await db_ctx.fetch()()
+        return await db_ctx.fetch()
 
 
 async def get_menu_items(id_list):
@@ -133,7 +133,7 @@ async def get_menu_items(id_list):
         await db_ctx.execute(
             f'SELECT id, shop, title, price, currency FROM menu WHERE id IN ({values});'
         )
-        return await db_ctx.fetch()()
+        return await db_ctx.fetch()
 
 
 async def update_last_offer_of_user(user_id, last_offer_id):
@@ -165,7 +165,7 @@ async def get_filters(user_id):
             'SELECT id, user_id, lat, lon, link, info FROM filters WHERE '
             f'user_id=\'{user_id}\''
         )
-        return await db_ctx.fetch()()
+        return await db_ctx.fetch()
 
 
 async def delete_filter(filter_id):
