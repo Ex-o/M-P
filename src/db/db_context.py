@@ -1,6 +1,4 @@
 import asyncpg
-import asyncpg as db
-from psycopg2.extras import RealDictCursor
 import os
 
 DSN = os.environ['DATABASE_DSN']
