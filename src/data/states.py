@@ -2,7 +2,7 @@ from telegram.ext import CallbackQueryHandler, MessageHandler, filters
 
 from ..modules.active_offers import active_offers_handler
 from ..modules.cancel_offer import cancel_offer_handler, cancel_confirm_handler, destroy_offer_handler
-from ..modules.courier import courier_handler
+from ..modules.courier.courier import courier_handler
 from ..modules.create_offer import meeting_place_handler, food_place_handler, \
     payment_handler, create_offer_handler, create_food_offer_handler, create_other_offer_handler, accept_payment_handler
 from ..modules.end import end_handler

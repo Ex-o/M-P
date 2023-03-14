@@ -1,7 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
-from ..data.pages import *
+from src.data.pages import *
 
 
 async def courier_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
