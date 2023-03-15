@@ -46,8 +46,11 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
     approvals = await get_needs_approval_list(user_id)
 
     if len(approvals) == 0:
+        keyboard = [[InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+
         await query.edit_message_text(
-            'There\'s nothing to approve yet!'
+            'There\'s nothing to approve yet!', reply_markup=reply_markup
         )
         return ConversationHandler.END
 
@@ -60,7 +63,7 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
         str(approvals[x]['offer_id']) + '#' + str(approvals[x]['user_id'])))]
                 for x in range(len(approvals))]
 
-    keyboard.append([InlineKeyboardButton("Cancel", callback_data="go_back")])
+    keyboard.append([InlineKeyboardButton("🔙 Go Back", callback_data="go_back")])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(reply, reply_markup=reply_markup)

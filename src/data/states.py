@@ -13,6 +13,7 @@ from ..modules.sender import sender_handler
 from ..modules.approve_offers import get_approvals_handler, confirm_approval_handler, approve_offer_handler
 from ..modules.filters import filters_handler, add_filter_handler, accept_filter_handler, delete_filter_handler, \
     confirm_delete_filter_handler
+from ..modules.start import start_handler
 
 START_STATE = {
     START_PAGE: [
@@ -27,7 +28,7 @@ SENDER_STATE = {
         CallbackQueryHandler(get_approvals_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(create_offer_handler, pattern="^" + str(3) + "$"),
         CallbackQueryHandler(cancel_offer_handler, pattern="^" + str(4) + "$"),
-        CallbackQueryHandler(sender_handler, pattern="^go_back$")
+        CallbackQueryHandler(start_handler, pattern="^go_back$")
     ]
 }
 
@@ -36,7 +37,7 @@ COURIER_STATE = {
         CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(filters_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(active_offers_handler, pattern="^" + str(3) + "$"),
-        CallbackQueryHandler(courier_handler, pattern="^go_back$")
+        CallbackQueryHandler(start_handler, pattern="^go_back$")
     ],
 }
 
@@ -48,7 +49,8 @@ CREATE_OFFER_STATE = {
     MEETING_PLACE_PAGE: [
         MessageHandler(
             filters.TEXT & ~filters.COMMAND, meeting_place_handler
-        )
+        ),
+        CallbackQueryHandler(sender_handler, pattern="^go_back$")
     ],
     OTHER_OFFER_PAGE: [
         MessageHandler(

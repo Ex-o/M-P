@@ -48,6 +48,7 @@ async def meeting_place_handler(update: Update, context: ContextTypes.DEFAULT_TY
     keyboard = [
         [InlineKeyboardButton("🍔 Food", callback_data=str(1))],
         [InlineKeyboardButton("📙 Other (Specify details)", callback_data=str(2))],
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
