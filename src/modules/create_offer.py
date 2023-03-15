@@ -50,7 +50,7 @@ async def create_food_offer_handler(update: Update, context: ContextTypes.DEFAUL
     await query.edit_message_text(
         text=f"Go to https://hitchy-web.herokuapp.com/?orderId={uid} and submit your order!", reply_markup=reply_markup
     )
-    return ORDER_TYPE_SELECT_PAGE
+    return FOOD_ORDER_PAGE
 
 
 async def meeting_place_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
