@@ -16,14 +16,14 @@ async def get_list_of_own_offers_handler(update: Update, context: ContextTypes.D
     offers = await get_own_offers(user_id)
 
     if len(offers) == 0:
-        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Go back", callback_data="go_back")]])
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]])
         await query.edit_message_text(
             text='You don\'t have any active offers! Go back and create some!', reply_markup=reply_markup
         )
         return SENDER_PAGE
 
     keyboard = [
-        [InlineKeyboardButton("Go back", callback_data="go_back")],
+        [InlineKeyboardButton("🔙 Go back", callback_data="go_back")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(

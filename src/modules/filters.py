@@ -13,6 +13,7 @@ async def filters_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     keyboard = [
         [InlineKeyboardButton("Add new location", callback_data=str(1))],
         [InlineKeyboardButton("Delete location", callback_data=str(2))],
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
@@ -26,8 +27,11 @@ async def add_filter_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
     query = update.callback_query
     await query.answer()
 
+    keyboard = [[InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
     await query.edit_message_text(
-        'Alright, please write the address where you want to add'
+        'Alright, please write the address where you want to add', reply_markup=reply_markup
     )
     return FILTERS_ADD_PAGE
 
@@ -42,6 +46,7 @@ async def accept_filter_handler(update: Update, context: ContextTypes.DEFAULT_TY
     keyboard = [
         [InlineKeyboardButton("Add new location", callback_data=str(1))],
         [InlineKeyboardButton("Delete location", callback_data=str(2))],
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -61,7 +66,7 @@ async def delete_filter_handler(update: Update, context: ContextTypes.DEFAULT_TY
                 for filter in filters]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-
+    keyboard.append([InlineKeyboardButton("🔙 Go Back", callback_data="go_back")])
     await query.edit_message_text(
         'Please select which filter you want to cancel!', reply_markup=reply_markup
     )
@@ -77,6 +82,7 @@ async def confirm_delete_filter_handler(update: Update, context: ContextTypes.DE
     keyboard = [
         [InlineKeyboardButton("Add new location", callback_data=str(1))],
         [InlineKeyboardButton("Delete location", callback_data=str(2))],
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 

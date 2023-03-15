@@ -81,6 +81,7 @@ GET_LIST_OF_OFFERS_STATE = {
 ACTIVE_OFFERS_STATE = {
     ACTIVE_OFFERS_PAGE: [
         CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
+        CallbackQueryHandler(courier_handler, pattern="^go_back$")
     ],
 }
 
@@ -110,13 +111,16 @@ FILTERS_STATE = {
     FILTERS_PAGE: [
         CallbackQueryHandler(add_filter_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(delete_filter_handler, pattern="^" + str(2) + "$"),
+        CallbackQueryHandler(courier_handler, pattern="^go_back$")
     ],
     FILTERS_ADD_PAGE: [
         MessageHandler(
             filters.TEXT & ~filters.COMMAND, accept_filter_handler
-        )
+        ),
+        CallbackQueryHandler(add_filter_handler, pattern="^go_back$")
     ],
     FILTERS_CANCEL_PAGE: [
-        CallbackQueryHandler(confirm_delete_filter_handler, pattern="^(0|[1-9][0-9]*)$")
+        CallbackQueryHandler(confirm_delete_filter_handler, pattern="^(0|[1-9][0-9]*)$"),
+        CallbackQueryHandler(delete_filter_handler, pattern="^go_back$")
     ]
 }

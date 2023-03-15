@@ -17,7 +17,7 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
     await query.answer()
 
     if len(offers) == 0:
-        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Go back", callback_data="go_back")]])
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]])
         await query.edit_message_text(
             text='Oops, there is no offer for you now. Try again later.', reply_markup=reply_markup
         )
