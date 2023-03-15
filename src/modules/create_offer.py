@@ -13,9 +13,14 @@ PROVIDER_TEST_TOKEN = os.environ['PROVIDER_TEST_TOKEN']
 async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
     await query.answer()
+    keyboard = [
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
         'Alright, please specify where you want to meet the courier in Innopolis'
     )
+    await query.edit_message_reply_markup(reply_markup=reply_markup)
     return MEETING_PLACE_PAGE
 
 
