@@ -54,8 +54,9 @@ async def create_food_offer_handler(update: Update, context: ContextTypes.DEFAUL
 
 
 async def meeting_place_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    text = update.message.text
-    context.user_data['loc_source'] = text
+    if update.message is not None:
+        text = update.message.text
+        context.user_data['loc_source'] = text
 
     keyboard = [
         [InlineKeyboardButton("🍔 Food", callback_data=str(1))],
@@ -63,9 +64,12 @@ async def meeting_place_handler(update: Update, context: ContextTypes.DEFAULT_TY
         [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text(
-        text="Choose your offer type", reply_markup=reply_markup
-    )
+    if update.message is not None:
+        await update.message.reply_text(
+            text="Choose your offer type", reply_markup=reply_markup
+        )
+    else:
+        await update.callback_query.message.edit_text("Choose your offer type", reply_markup=reply_markup)
     return ORDER_TYPE_SELECT_PAGE
 
 
