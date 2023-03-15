@@ -22,5 +22,8 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     ]
 
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
-    await update.message.reply_text('Welcome', reply_markup=reply_markup)
+    if update.message is not None:
+        await update.message.reply_text('Welcome', reply_markup=reply_markup)
+    else:
+        await update.callback_query.message.edit_text('Welcome', reply_markup=reply_markup)
     return START_PAGE
