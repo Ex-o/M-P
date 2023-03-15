@@ -6,6 +6,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from ..data.pages import *
 
+
 async def sender_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
     await query.answer()
@@ -14,6 +15,7 @@ async def sender_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         [InlineKeyboardButton("Approves", callback_data=str(2))],
         [InlineKeyboardButton("Create offer", callback_data=str(3))],
         [InlineKeyboardButton("Cancel offer", callback_data=str(4))],
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(

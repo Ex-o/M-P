@@ -27,7 +27,7 @@ SENDER_STATE = {
         CallbackQueryHandler(get_approvals_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(create_offer_handler, pattern="^" + str(3) + "$"),
         CallbackQueryHandler(cancel_offer_handler, pattern="^" + str(4) + "$"),
-        CallbackQueryHandler(end_handler, pattern="^" + str(9999) + "$")
+        CallbackQueryHandler(sender_handler, pattern="^go_back$")
     ]
 }
 
@@ -36,6 +36,7 @@ COURIER_STATE = {
         CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(filters_handler, pattern="^" + str(2) + "$"),
         CallbackQueryHandler(active_offers_handler, pattern="^" + str(3) + "$"),
+        CallbackQueryHandler(courier_handler, pattern="^go_back$")
     ],
 }
 
@@ -77,7 +78,8 @@ ACTIVE_OFFERS_STATE = {
 
 CANCEL_OFFER_STATE = {
     CANCEL_OFFER_PAGE: [
-        CallbackQueryHandler(cancel_confirm_handler, pattern="^(0|[1-9][0-9]*)$")
+        CallbackQueryHandler(cancel_confirm_handler, pattern="^(0|[1-9][0-9]*)$"),
+        CallbackQueryHandler(sender_handler, pattern="^go_back$")
     ],
     CANCEL_CONFIRM_PAGE: [
         CallbackQueryHandler(destroy_offer_handler, pattern="^" + str(1) + "$"),
@@ -87,7 +89,8 @@ CANCEL_OFFER_STATE = {
 
 OFFER_APPROVAL_STATE = {
     GET_APPROVALS_PAGE: [
-        CallbackQueryHandler(confirm_approval_handler, pattern="^((0|[1-9][0-9]*)#(0|[1-9][0-9]*))$")
+        CallbackQueryHandler(confirm_approval_handler, pattern="^((0|[1-9][0-9]*)#(0|[1-9][0-9]*))$"),
+        CallbackQueryHandler(sender_handler, pattern="^go_back$")
     ],
     APPROVAL_CONFIRM_PAGE: [
         CallbackQueryHandler(approve_offer_handler, pattern="^" + str(1) + "$"),

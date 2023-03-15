@@ -12,6 +12,7 @@ async def courier_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         [InlineKeyboardButton("Get list of offers", callback_data=str(1))],
         [InlineKeyboardButton("Edit filters", callback_data=str(2))],
         [InlineKeyboardButton("Get your active offers", callback_data=str(3))],
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")],
     ]
     context.user_data['page'] = 0
     reply_markup = InlineKeyboardMarkup(keyboard)
