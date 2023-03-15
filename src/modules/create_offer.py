@@ -22,8 +22,12 @@ async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYP
 async def create_other_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
     await query.answer()
+    keyboard = [
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
-        'Alright, please specify where you want the courier to go'
+        'Alright, please specify where you want the courier to go', reply_markup=reply_markup
     )
     return OTHER_OFFER_PAGE
 
