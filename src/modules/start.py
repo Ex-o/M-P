@@ -13,7 +13,8 @@ from ..db.utils import register_user
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
 
-    await register_user(user.id, user.full_name, update.message.chat_id)
+    if update.message is not None:
+        await register_user(user.id, user.full_name, update.message.chat_id)
 
     button_list = [
         InlineKeyboardButton("Courier", callback_data=str(1)),
@@ -23,4 +24,3 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
     await update.message.reply_text('Welcome', reply_markup=reply_markup)
     return START_PAGE
-
