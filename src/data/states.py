@@ -54,7 +54,7 @@ CREATE_OFFER_STATE = {
         CallbackQueryHandler(sender_handler, pattern="^go_back$")
     ],
     FOOD_ORDER_PAGE: [
-            CallbackQueryHandler(meeting_place_handler, pattern="^go_back$")
+        CallbackQueryHandler(meeting_place_handler, pattern="^go_back$")
     ],
     OTHER_OFFER_PAGE: [
         MessageHandler(
