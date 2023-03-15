@@ -117,10 +117,10 @@ FILTERS_STATE = {
         MessageHandler(
             filters.TEXT & ~filters.COMMAND, accept_filter_handler
         ),
-        CallbackQueryHandler(add_filter_handler, pattern="^go_back$")
+        CallbackQueryHandler(filters_handler, pattern="^go_back$")
     ],
     FILTERS_CANCEL_PAGE: [
         CallbackQueryHandler(confirm_delete_filter_handler, pattern="^(0|[1-9][0-9]*)$"),
-        CallbackQueryHandler(delete_filter_handler, pattern="^go_back$")
+        CallbackQueryHandler(filters_handler, pattern="^go_back$")
     ]
 }
