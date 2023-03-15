@@ -45,6 +45,7 @@ CREATE_OFFER_STATE = {
     ORDER_TYPE_SELECT_PAGE: [
         CallbackQueryHandler(create_food_offer_handler, pattern="^" + str(1) + "$"),
         CallbackQueryHandler(create_other_offer_handler, pattern="^" + str(2) + "$"),
+        CallbackQueryHandler(create_offer_handler, pattern="^go_back$")
     ],
     MEETING_PLACE_PAGE: [
         MessageHandler(
@@ -55,7 +56,9 @@ CREATE_OFFER_STATE = {
     OTHER_OFFER_PAGE: [
         MessageHandler(
             filters.TEXT & ~filters.COMMAND, food_place_handler
-        )
+        ),
+        CallbackQueryHandler(meeting_place_handler, pattern="^go_back$")
+
     ],
     PAYMENT_PAGE: [
         MessageHandler(

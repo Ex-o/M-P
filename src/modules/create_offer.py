@@ -18,9 +18,8 @@ async def create_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYP
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
-        'Alright, please specify where you want to meet the courier in Innopolis'
+        'Alright, please specify where you want to meet the courier in Innopolis', reply_markup=reply_markup
     )
-    await query.edit_message_reply_markup(reply_markup=reply_markup)
     return MEETING_PLACE_PAGE
 
 
@@ -44,10 +43,14 @@ async def create_food_offer_handler(update: Update, context: ContextTypes.DEFAUL
     uid = uuid.uuid1()
     await add_pending_food_offer(update.effective_user.id, uid, "BGK", context.user_data['loc_source'])
 
+    keyboard = [
+        [InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
-        text=f"Go to https://hitchy-web.herokuapp.com/?orderId={uid} and submit your order!"
+        text=f"Go to https://hitchy-web.herokuapp.com/?orderId={uid} and submit your order!", reply_markup=reply_markup
     )
-    return ConversationHandler.END
+    return ORDER_TYPE_SELECT_PAGE
 
 
 async def meeting_place_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
