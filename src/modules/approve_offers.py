@@ -52,7 +52,7 @@ async def get_approvals_handler(update: Update, context: ContextTypes.DEFAULT_TY
         await query.edit_message_text(
             'There\'s nothing to approve yet!', reply_markup=reply_markup
         )
-        return ConversationHandler.END
+        return GET_APPROVALS_PAGE
 
     reply = ""
 
