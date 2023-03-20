@@ -15,7 +15,7 @@ async def register_user(telegram_id, full_name, chat_id):
 async def get_user(user_id):
     async with await db() as db_ctx:
         return await db_ctx.fetchrow(
-            f'SELECT id, full_name, last_offer FROM users WHERE id = \'{user_id}\';')
+            f'SELECT id, full_name, last_offer, trust_score_sender, trust_score_courier FROM users WHERE id = \'{user_id}\';')
 
 
 async def delete_offer(offer_id):

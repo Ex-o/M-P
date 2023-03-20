@@ -86,6 +86,7 @@ ACTIVE_OFFERS_STATE = {
     ACTIVE_OFFERS_PAGE: [
         CallbackQueryHandler(active_offers_update_handler, pattern="^(0|[1-9][0-9]*)$"),
         CallbackQueryHandler(courier_handler, pattern="^go_back$"),
+        CallbackQueryHandler(active_offers_handler, pattern="^go_back_2$"),
     ],
 }
 
