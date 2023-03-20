@@ -47,7 +47,8 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
         await get_filters(user.id),
     )
 
-    query = await update.callback_query.answer()
+    query = update.callback_query
+    await query.answer()
 
     context.user_data['page'] = min(max(0, context.user_data['page']), math.floor((len(offers) - 1) / 5))
 
@@ -86,7 +87,8 @@ async def next_page_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         await get_filters(user.id),
     )
 
-    query = await update.callback_query.answer()
+    query = update.callback_query
+    await query.answer()
 
     context.user_data['page'] += 1
     context.user_data['page'] = min(max(0, context.user_data['page']), math.floor((len(offers) - 1) / 5))
@@ -102,7 +104,8 @@ async def prev_page_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         await get_filters(user.id),
     )
 
-    query = await update.callback_query.answer()
+    query = update.callback_query
+    await query.answer()
 
     context.user_data['page'] -= 1
     context.user_data['page'] = min(max(0, context.user_data['page']), math.floor((len(offers) - 1) / 5))
