@@ -110,7 +110,7 @@ async def get_active_sender_offers(user_id):
 
 
 # TODO: better name pls
-async def get_offers(user_id):
+async def get_active_offers(user_id):
     async with await db() as db_ctx:
         return await db_ctx.fetch(
             'SELECT offers.loc_destination, offers.loc_source, offers.cost, offers.id FROM offers JOIN matched_offers '

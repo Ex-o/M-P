@@ -1,6 +1,6 @@
 from telegram.ext import CallbackQueryHandler, MessageHandler, filters
 
-from ..modules.active_offers import active_offers_handler
+from ..modules.active_offers import active_offers_handler, active_offers_update_handler
 from ..modules.cancel_offer import cancel_offer_handler, cancel_confirm_handler, destroy_offer_handler
 from ..modules.courier.courier import courier_handler
 from ..modules.create_offer import meeting_place_handler, food_place_handler, \
@@ -84,8 +84,8 @@ GET_LIST_OF_OFFERS_STATE = {
 
 ACTIVE_OFFERS_STATE = {
     ACTIVE_OFFERS_PAGE: [
-        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(courier_handler, pattern="^go_back$")
+        CallbackQueryHandler(active_offers_update_handler, pattern="^(0|[1-9][0-9]*)$"),
+        CallbackQueryHandler(courier_handler, pattern="^go_back$"),
     ],
 }
 
