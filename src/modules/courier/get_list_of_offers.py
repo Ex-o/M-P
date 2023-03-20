@@ -1,3 +1,5 @@
+import math
+
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, Update
 from telegram.ext import ContextTypes
 
@@ -6,16 +8,7 @@ from ...utils.util import to_offer, filter_offers
 from ...data.pages import *
 
 
-async def get_list_of_others_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    user = update.effective_user
-
-    filters = await get_filters(user.id)
-    offers = await get_offers_by_status('paid', user.id)
-    offers = filter_offers(offers, filters)
-
-    query = update.callback_query
-    await query.answer()
-
+async def _show_offers_page(query, offers, page) -> int:
     if len(offers) == 0:
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Go Back", callback_data="go_back")]])
         await query.edit_message_text(
@@ -23,10 +16,8 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
         )
         return GET_LIST_OF_OFFERS_PAGE
 
-    page = context.user_data['page']
-    left = min(len(offers) - 5, page * 5)
-    left = max(left, 0)
-    offers = offers[left:min(len(offers), left+5)]
+    left = max(min(len(offers) - 5, page * 5), 0)
+    offers = offers[left:min(len(offers), left + 5)]
 
     reply = ""
 
@@ -34,7 +25,7 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
         reply += f'{idx}. {to_offer([offer])}'
 
     keyboard = [[InlineKeyboardButton(f"Accept {x}",
-                                      callback_data=str(offers[x-1]['id']))]
+                                      callback_data=str(offers[x - 1]['id']))]
                 for x in range(1, len(offers) + 1)]
     keyboard.append([InlineKeyboardButton('Previous page', callback_data='##Previous page##'),
                      InlineKeyboardButton('Next page', callback_data='##Next page##')])
@@ -46,6 +37,21 @@ async def get_list_of_others_offers_handler(update: Update, context: ContextType
     )
 
     return GET_LIST_OF_OFFERS_PAGE
+
+
+async def get_list_of_others_offers_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    user = update.effective_user
+
+    offers = filter_offers(
+        await get_offers_by_status('paid', user.id),
+        await get_filters(user.id),
+    )
+
+    query = await update.callback_query.answer()
+
+    context.user_data['page'] = min(max(0, context.user_data['page']), math.floor((len(offers) - 1) / 5))
+
+    return await _show_offers_page(query, offers, context.user_data['page'])
 
 
 async def ready_to_complete_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -70,3 +76,35 @@ async def ready_to_complete_handler(update: Update, context: ContextTypes.DEFAUL
     )
 
     return GET_LIST_OF_OFFERS_PAGE
+
+
+async def next_page_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    user = update.effective_user
+
+    offers = filter_offers(
+        await get_offers_by_status('paid', user.id),
+        await get_filters(user.id),
+    )
+
+    query = await update.callback_query.answer()
+
+    context.user_data['page'] += 1
+    context.user_data['page'] = min(max(0, context.user_data['page']), math.floor((len(offers) - 1) / 5))
+
+    return await _show_offers_page(query, offers, context.user_data['page'])
+
+
+async def prev_page_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    user = update.effective_user
+
+    offers = filter_offers(
+        await get_offers_by_status('paid', user.id),
+        await get_filters(user.id),
+    )
+
+    query = await update.callback_query.answer()
+
+    context.user_data['page'] -= 1
+    context.user_data['page'] = min(max(0, context.user_data['page']), math.floor((len(offers) - 1) / 5))
+
+    return await _show_offers_page(query, offers, context.user_data['page'])
