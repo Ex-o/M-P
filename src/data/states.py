@@ -74,7 +74,8 @@ CREATE_OFFER_STATE = {
 GET_LIST_OF_OFFERS_STATE = {
     GET_LIST_OF_OFFERS_PAGE: [
         CallbackQueryHandler(ready_to_complete_handler, pattern="^(0|[1-9][0-9]*)$"),
-        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^(accept_more|go_back)$"),
+        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^accept_more$"),
+        CallbackQueryHandler(courier_handler, pattern="^go_back$"),
         CallbackQueryHandler(end_handler, pattern="^end$"),
         CallbackQueryHandler(next_page_handler, pattern="##Previous page##"),
         CallbackQueryHandler(prev_page_handler, pattern="##Next page##"),

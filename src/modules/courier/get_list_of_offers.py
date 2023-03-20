@@ -91,7 +91,7 @@ async def next_page_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     await query.answer()
 
     context.user_data['page'] += 1
-    context.user_data['page'] = min(max(0, context.user_data['page']), math.floor((len(offers) - 1) / 5))
+    context.user_data['page'] = max(0, min(context.user_data['page'], math.floor((len(offers) - 1) / 5)))
 
     return await _show_offers_page(query, offers, context.user_data['page'])
 
@@ -108,6 +108,6 @@ async def prev_page_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     await query.answer()
 
     context.user_data['page'] -= 1
-    context.user_data['page'] = min(max(0, context.user_data['page']), math.floor((len(offers) - 1) / 5))
+    context.user_data['page'] = max(0, min(context.user_data['page'], math.floor((len(offers) - 1) / 5)))
 
     return await _show_offers_page(query, offers, context.user_data['page'])
