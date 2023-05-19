@@ -1,3 +1,4 @@
+import json
 import logging
 
 from telegram import Update
@@ -10,7 +11,7 @@ async def get_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 
     logging.info(update.message.text.replace("/get ", ""))
     offer = await get_temp_order(update.message.text.replace("/get ", ""))
-    await update.message.reply_text(offer[0]["order_json"])
+    await update.message.reply_text(json.dumps(offer[0]["order_json"], indent=4, ensure_ascii=False))
 
 async def help_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
