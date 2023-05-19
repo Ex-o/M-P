@@ -88,11 +88,11 @@ async def delete_other_matches(offer_id, user_id):
         )
 
 
-async def add_temp_offer(id, telegram_alias, offer):
+async def add_temp_order(order_id, telegram_alias, offer):
     async with await db() as db_ctx:
         await db_ctx.execute(
-            'INSERT INTO temp_offers (id, telegram_alias, order_json) '
-            f'VALUES (\'{id}\', \'{telegram_alias}\', \'{offer}\');')
+            'INSERT INTO temp_orders (id, telegram_alias, order_json) '
+            f'VALUES (\'{order_id}\', \'{telegram_alias}\', \'{offer}\');')
 
 
 async def get_temp_order(order_id):

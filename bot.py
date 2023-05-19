@@ -28,7 +28,7 @@ from starlette.routing import Route
 from telegram import __version__ as TG_VER, Update, PreCheckoutQuery
 from telegram.constants import ParseMode
 
-from src.db.utils import get_order_by_hash, get_temp_order, add_temp_offer
+from src.db.utils import get_order_by_hash, get_temp_order, add_temp_order
 from src.modules.webapp_processor import WebhookUpdate, CustomContext, webhook_update
 
 try:
@@ -84,6 +84,7 @@ async def main() -> None:
 
     # register handlers
     application.add_handler(CommandHandler("help", help_handler))
+    application.add_handler(CommandHandler("get", get_handler))
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start_handler)],
         states=
@@ -130,7 +131,7 @@ async def main() -> None:
         #                                                  offer_details=offer_json["order"]))
 
         print(offer_json)
-        await add_temp_offer(offer_json["orderId"], offer_json["user"]["telegramAlias"], offer_json)
+        await add_temp_order(offer_json["orderId"], offer_json["user"]["telegramAlias"], offer_json)
         return PlainTextResponse("Thank you!")
 
     async def health(_: Request) -> PlainTextResponse:
