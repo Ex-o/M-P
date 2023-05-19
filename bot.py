@@ -130,7 +130,7 @@ async def main() -> None:
         #                                                  offer_details=offer_json["order"]))
 
         print(offer_json)
-        await add_temp_offer(offer_json["orderId"], offer_json["telegramAlias"], offer_json["order"])
+        await add_temp_offer(offer_json["orderId"], offer_json["userInfo"]["telegramAlias"], offer_json)
         return PlainTextResponse("Thank you!")
 
     async def health(_: Request) -> PlainTextResponse:
