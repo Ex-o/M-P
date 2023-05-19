@@ -28,7 +28,7 @@ from starlette.routing import Route
 from telegram import __version__ as TG_VER, Update, PreCheckoutQuery
 from telegram.constants import ParseMode
 
-from src.db.utils import get_order_by_hash
+from src.db.utils import get_order_by_hash, get_temp_order, add_temp_offer
 from src.modules.webapp_processor import WebhookUpdate, CustomContext, webhook_update
 
 try:
@@ -119,15 +119,18 @@ async def main() -> None:
 
     async def custom_updates(request: Request) -> PlainTextResponse:
         offer_json = await request.json()
-        offer = await get_order_by_hash(offer_json["orderId"])
+        # offer = await get_order_by_hash(offer_json["orderId"])
+        #
+        # if len(offer) == 0:
+        #     return PlainTextResponse("Incorrect hash!")
 
-        if len(offer) == 0:
-            return PlainTextResponse("Incorrect hash!")
+        # await application.update_queue.put(WebhookUpdate(user_id=offer_json["user_id"],
+        #                                                  offer_id=offer["id"],
+        #                                                  food_hash=offer_json["orderId"],
+        #                                                  offer_details=offer_json["order"]))
 
-        await application.update_queue.put(WebhookUpdate(user_id=offer["user_id"],
-                                                         offer_id=offer["id"],
-                                                         food_hash=offer_json["orderId"],
-                                                         offer_details=offer_json["selections"]))
+        print(offer_json)
+        await add_temp_offer(offer_json["orderId"], offer_json["telegramAlias"], offer_json["order"])
         return PlainTextResponse("Thank you!")
 
     async def health(_: Request) -> PlainTextResponse:

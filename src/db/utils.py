@@ -88,6 +88,20 @@ async def delete_other_matches(offer_id, user_id):
         )
 
 
+async def add_temp_offer(id, telegram_alias, offer):
+    async with await db() as db_ctx:
+        await db_ctx.execute(
+            'INSERT INTO temp_offers (id, telegram_alias, order_json) '
+            f'VALUES (\'{id}\', \'{telegram_alias}\', \'{offer}\');')
+
+
+async def get_temp_order(order_id):
+    async with await db() as db_ctx:
+        return await db_ctx.fetch(
+            f"SELECT * FROM temp_orders WHERE id = \'{order_id}\';"
+        )
+
+
 async def get_needs_approval_list(user_id):
     async with await db() as db_ctx:
         return await db_ctx.fetch(
