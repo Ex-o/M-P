@@ -8,7 +8,7 @@ from src.db.utils import get_temp_order
 async def get_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
 
-    logging.log(update.message.text)
+    logging.info(update.message.text)
     offer = await get_temp_order(update.message.text)
     await update.message.reply_text(offer[0]["order_json"])
 
