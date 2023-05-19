@@ -1,6 +1,6 @@
 from telegram.ext import CallbackQueryHandler, MessageHandler, filters
 
-from ..modules.active_offers import active_offers_handler
+from ..modules.active_offers import active_offers_handler, active_offers_update_handler
 from ..modules.cancel_offer import cancel_offer_handler, cancel_confirm_handler, destroy_offer_handler
 from ..modules.courier.courier import courier_handler
 from ..modules.create_offer import meeting_place_handler, food_place_handler, \
@@ -8,7 +8,8 @@ from ..modules.create_offer import meeting_place_handler, food_place_handler, \
 from ..modules.end import end_handler
 from ..data.pages import *
 from ..modules.get_list_of_offers import get_list_of_own_offers_handler
-from ..modules.courier.get_list_of_offers import get_list_of_others_offers_handler, ready_to_complete_handler
+from ..modules.courier.get_list_of_offers import get_list_of_others_offers_handler, ready_to_complete_handler, \
+    next_page_handler, prev_page_handler
 from ..modules.sender import sender_handler
 from ..modules.approve_offers import get_approvals_handler, confirm_approval_handler, approve_offer_handler
 from ..modules.filters import filters_handler, add_filter_handler, accept_filter_handler, delete_filter_handler, \
@@ -73,15 +74,19 @@ CREATE_OFFER_STATE = {
 GET_LIST_OF_OFFERS_STATE = {
     GET_LIST_OF_OFFERS_PAGE: [
         CallbackQueryHandler(ready_to_complete_handler, pattern="^(0|[1-9][0-9]*)$"),
-        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^(accept_more|go_back)$"),
+        CallbackQueryHandler(get_list_of_others_offers_handler, pattern="^accept_more$"),
+        CallbackQueryHandler(courier_handler, pattern="^go_back$"),
         CallbackQueryHandler(end_handler, pattern="^end$"),
+        CallbackQueryHandler(next_page_handler, pattern="##Previous page##"),
+        CallbackQueryHandler(prev_page_handler, pattern="##Next page##"),
     ],
 }
 
 ACTIVE_OFFERS_STATE = {
     ACTIVE_OFFERS_PAGE: [
-        CallbackQueryHandler(end_handler, pattern="^" + str(1) + "$"),
-        CallbackQueryHandler(courier_handler, pattern="^go_back$")
+        CallbackQueryHandler(active_offers_update_handler, pattern="^(0|[1-9][0-9]*)$"),
+        CallbackQueryHandler(courier_handler, pattern="^go_back$"),
+        CallbackQueryHandler(active_offers_handler, pattern="^go_back_2$"),
     ],
 }
 
