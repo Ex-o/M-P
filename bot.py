@@ -51,7 +51,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, Conversation
     TypeHandler, PreCheckoutQueryHandler
 
 from src.modules.start import start_handler
-from src.modules.help import help_handler
+from src.modules.help import help_handler, get_handler
 from src.data.states import *
 from src.modules.create_offer import pre_checkout_handler, accept_payment_handler
 from subprocess import Popen, PIPE
